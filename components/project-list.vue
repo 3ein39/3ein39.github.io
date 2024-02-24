@@ -21,7 +21,7 @@ const repos = computed(() => {
         <div v-if="pending">Loading...</div>
         <div v-else-if="error">Error: {{ error.message }}</div>
         <div v-else>
-            <ul class="grid grid-cols-1 gap-4">
+            <ul class="grid grid-cols-2 gap-4">
                 <li v-for="repo in repos" :key="repo.id"
                     class="border border-gray-200 rounded-sm p-4 hover:bg-gray-200 hover:cursor-pointer font-mono">
                     <a :href="repo.html_url" target="_blank">
