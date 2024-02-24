@@ -3,34 +3,44 @@ useHead({
     title: 'Projects',
 })
 
-const { error, pending, data } = useFetch('https://api.github.com/users/3ein39/repos')
-const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+const { error, pending, data } = await useFetch('https://api.github.com/users/3ein39/repos')
+
+
+const repos = computed(() => {
+    console.log(data.value)
+    return data.value
+        .filter(repo => repo.description)
+        .sort((a, b) => b.description.length - a.description.length)
 }
+)
 </script>
+
 <template>
     <div>
-        <h1>Projects</h1>
-        <!-- {{ data }} -->
+      <p class="mb-10">Take a look at my GitHub projects!</p>
         <div v-if="pending">Loading...</div>
         <div v-else-if="error">Error: {{ error.message }}</div>
         <div v-else>
-            <ul>
-                <li v-for="repo in data" :key="repo.id" class="p-6">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <a :href="repo.html_url" target="_blank" class="font-bold">{{ repo.name }}</a>
-                            <p class="text-gray-600">{{ repo.description }}</p>
-                            <span class="text-sm text-gray-500">{{ repo.language }}</span>
+            <ul class="grid grid-cols-1 gap-4">
+                <li v-for="repo in repos" :key="repo.id"
+                    class="border border-gray-200 rounded-sm p-4 hover:bg-gray-200 hover:cursor-pointer font-mono">
+                    <a :href="repo.html_url" target="_blank">
+                        <div class="flex items-start justify-between text-sm">
+                            <div>
+                                <p class="font-bold">{{ repo.name }}</p>
+                                <p class="text-gray-600">{{ repo.description }}</p>
+                                <div class="mt-2">
+                                    <span
+                                        class="inline-block bg-blue-200 text-blue-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide"
+                                        v-if="repo.language">{{ repo.language }}</span>
+                                    <span v-for="topic in repo.topics" :key="topic"
+                                        class="inline-block bg-green-200 text-green-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide ml-2">{{
+                                            topic }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <p class="text-xs text-gray-500">Owner: {{ repo.owner.login }}</p>
-                            <p class="text-xs text-gray-500">Created: {{ formatDate(repo.created_at) }}</p>
-                            <p class="text-xs text-gray-500">Last Updated: {{ formatDate(repo.updated_at) }}</p>
-                            <p class="text-xs text-gray-500">Forks: {{ repo.forks_count }}</p>
-                        </div>
-                    </div>
+                    </a>
+
                 </li>
             </ul>
 
