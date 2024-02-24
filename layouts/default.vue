@@ -1,6 +1,8 @@
 <script setup>
 useHead({
     titleTemplate: '%s - Hussein Hany',
+
+    // adds those links to the head
     link: [
         {
             rel: 'preconnect',
@@ -43,5 +45,11 @@ useHead({
 <style scoped>
 .link {
     @apply p-1 hover:bg-gray-200;
+}
+</style>
+
+<style>
+body {
+    font-family: 'Roboto';
 }
 </style>

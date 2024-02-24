@@ -1,6 +1,8 @@
 <script setup>
 const route = useRoute()
-
+useHead({
+    title: `Blog Post ${route.params.id}`
+})
 </script>
 
 <template>

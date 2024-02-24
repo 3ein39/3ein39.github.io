@@ -1,3 +1,9 @@
+<script setup>
+useHead({
+    title: 'Blog'
+})
+</script>
+
 <template>
     <div>
         <h1>Blog Post</h1>
