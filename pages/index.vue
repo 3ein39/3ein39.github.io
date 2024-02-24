@@ -1,3 +1,7 @@
+<script setup>
+</script>
+
+
 <template>
     <h1>This is an H1!</h1>
 </template>
