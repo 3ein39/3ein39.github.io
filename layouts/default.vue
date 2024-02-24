@@ -9,10 +9,10 @@
             <nav class="font-mono">
                 <ul class="flex space-x-4">
                     <li>
-                        <NuxtLink to="/">Main</NuxtLink>
+                        <NuxtLink to="/" class="link">Main</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/about">About</NuxtLink>
+                        <NuxtLink to="/about" class="link">About</NuxtLink>
                     </li>
                 </ul>
             </nav>
@@ -22,3 +22,9 @@
         </main>
     </div>
 </template>
+
+<style scoped>
+.link {
+    @apply p-1 hover:bg-gray-200;
+}
+</style>
