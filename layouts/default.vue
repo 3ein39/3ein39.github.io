@@ -33,10 +33,13 @@ useHead({
                     <li>
                         <NuxtLink to="/about" class="link">About</NuxtLink>
                     </li>
+                    <li>
+                        <NuxtLink to="/projects" class="link">Projects</NuxtLink>
+                    </li>
                 </ul>
             </nav>
         </header>
-        <main class="p-2">
+        <main class="p-2 mt-10">
             <slot />
         </main>
     </div>
