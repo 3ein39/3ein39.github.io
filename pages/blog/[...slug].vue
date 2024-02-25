@@ -6,7 +6,7 @@ useHead({
 </script>
 
 <template>
-    <article>
+    <article class="prose prose-pre:bg-white prose-pre:text-gray-700">
         <ContentDoc />
     </article>
 </template>

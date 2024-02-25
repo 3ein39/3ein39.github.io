@@ -10,5 +10,13 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
-},
+  },
+  content: {
+    highlight: {
+      theme: {
+        default: 'min-light',
+        dark: 'min-dark'
+      }
+    }
+  }
 })
