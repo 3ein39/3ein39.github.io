@@ -7,7 +7,6 @@ const { error, pending, data } = await useFetch('https://api.github.com/users/3e
 
 
 const repos = computed(() => {
-    console.log(data.value)
     return data.value
         .filter(repo => repo.description)
         .sort((a, b) => b.description.length - a.description.length)
