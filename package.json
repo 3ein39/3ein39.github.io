@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
     "nuxt": "^3.10.2",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",
-    "@vesp/nuxt-fontawesome": "^1.0.4"
+    "@vesp/nuxt-fontawesome": "^1.0.4",
+    "gh-pages": "^6.1.1"
   }
 }
