@@ -2,11 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss"],
-  target: 'static',
-  router: {
-    base: "/3ein39/"
-  },
-  generate: {
-    fallback: '404.html'
+  app: {
+    baseURL: '/3ein39/',
   }
 })
