@@ -5,7 +5,7 @@
             <p
                 :class="[themeStyles.accentBorder, 'mb-5 inline-flex items-center gap-2 rounded-full border bg-cyan-400/10 px-4 py-2 text-sm font-medium']">
                 <span :class="themeStyles.accentBg" class="h-2 w-2 rounded-full" />
-                Available for frontend and full-stack collaborations
+                Available for frontend collaborations
             </p>
 
             <h1 class="max-w-3xl text-4xl font-black tracking-tight text-balance sm:text-5xl lg:text-7xl">
@@ -13,7 +13,7 @@
             </h1>
 
             <p :class="themeStyles.textMuted" class="mt-6 max-w-2xl text-lg leading-8 sm:text-xl">
-                I design and ship Vue.js and Nuxt experiences with a MEVN mindset, strong problem-solving habits, and a
+                I design and ship Vue.js and Nuxt experiences with a strong problem-solving habits, and a
                 focus on clean interaction design. I enjoy turning complex requirements into calm, usable interfaces.
             </p>
 
@@ -36,7 +36,7 @@
                 <div v-for="highlight in highlights" :key="highlight.label"
                     :class="[themeStyles.panelSoft, 'rounded-2xl border p-4 backdrop-blur']">
                     <dt :class="themeStyles.accentText" class="text-sm uppercase tracking-[0.22em]">{{ highlight.label
-                        }}</dt>
+                    }}</dt>
                     <dd class="mt-2 text-xl font-bold">{{ highlight.value }}</dd>
                 </div>
             </dl>
@@ -47,9 +47,17 @@
             <div :class="themeStyles.heroGlow" class="absolute inset-0" />
             <div class="relative space-y-6">
                 <div class="flex items-center gap-4">
-                    <div :class="themeStyles.avatar"
-                        class="flex h-20 w-20 shrink-0 items-center justify-center rounded-3xl text-2xl font-black tracking-[0.3em]">
-                        HH
+                    <div class="relative h-20 w-20 shrink-0 overflow-hidden rounded-3xl border"
+                        :class="[themeStyles.avatar, 'flex items-center justify-center']">
+                        <img src="https://media.licdn.com/dms/image/v2/D5603AQFqPp_1DAWlPQ/profile-displayphoto-scale_200_200/B56Zs9zDzEJUAc-/0/1766268355199?e=1779321600&v=beta&t=0Yr6u67rlrihiC8Mn1t6NbWv-Gt1Ztj6D4-iWoXxPUo"
+                            alt="Hussein Hany profile photo"
+                            class="h-full w-full object-cover transition-opacity duration-300"
+                            :class="[imageLoaded ? 'opacity-100' : 'opacity-0']" @load="imageLoaded = true"
+                            @error="imageLoaded = false" />
+                        <span v-if="!imageLoaded"
+                            class="absolute inset-0 flex items-center justify-center text-2xl font-black tracking-[0.3em]">
+                            HH
+                        </span>
                     </div>
                     <div>
                         <p :class="themeStyles.accentText" class="text-sm font-semibold uppercase tracking-[0.28em]">
@@ -94,6 +102,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
 defineProps({
     themeStyles: {
         type: Object,
@@ -116,4 +126,6 @@ defineProps({
         required: true,
     },
 })
+
+const imageLoaded = ref(false)
 </script>

@@ -42,12 +42,12 @@ import SkillsSection from '~/components/portfolio/SkillsSection.vue'
 const emailAddress = 'hussein.hany.cs@gmail.com'
 const linkedinUrl = 'https://www.linkedin.com/in/3ein39/'
 const githubUrl = 'https://github.com/3ein39'
-const resumeUrl = 'https://drive.google.com/file/d/1sAmfjnjIAwaKPi_3oxt3XWzsbTCCxWkQ/view?usp=sharing'
+const resumeUrl = 'https://drive.google.com/file/d/16pwMcAf-qPjMAhWDyhZQQBl7v9Ycgtic/view?usp=drive_link'
 
 useSeoMeta({
     title: 'Hussein Hany | Frontend Developer',
     description:
-        'Hussein Hany is a Vue and Nuxt frontend developer who builds fast, accessible web apps and full-stack projects.',
+        'Hussein Hany is a Vue and Nuxt frontend developer who builds fast, accessible web apps.',
     ogTitle: 'Hussein Hany | Frontend Developer',
     ogDescription:
         'Vue.js and Nuxt developer with full-stack experience, strong problem-solving skills, and mentoring experience.',
@@ -169,8 +169,8 @@ const recommendation = {
     ],
 }
 
-const footerLeftText = 'Built for Hussein Hany with Vue 3, Nuxt 3, and Tailwind CSS.'
-const footerRightText = 'One-page portfolio focused on accessibility, performance, and clarity.'
+const footerLeftText = 'Built by Hussein Hany with Vue 3, Nuxt 3, and Tailwind CSS.'
+const footerRightText = ''
 
 const theme = ref('dark')
 const activeSection = ref('top')

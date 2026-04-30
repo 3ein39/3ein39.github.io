@@ -4,8 +4,17 @@
             :class="[themeStyles.panel, 'mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 rounded-3xl border px-4 py-4 shadow-2xl backdrop-blur-xl sm:px-6']">
             <a href="#top"
                 class="group flex items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent">
-                <span :class="themeStyles.brandMark"
-                    class="flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-black tracking-[0.25em]">HH</span>
+                <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-2xl border"
+                    :class="[themeStyles.brandMark, 'flex items-center justify-center']">
+                    <img src="https://media.licdn.com/dms/image/v2/D5603AQFqPp_1DAWlPQ/profile-displayphoto-scale_200_200/B56Zs9zDzEJUAc-/0/1766268355199?e=1779321600&v=beta&t=0Yr6u67rlrihiC8Mn1t6NbWv-Gt1Ztj6D4-iWoXxPUo"
+                        alt="Hussein Hany profile" class="h-full w-full object-cover transition-opacity duration-300"
+                        :class="[imageLoadedNav ? 'opacity-100' : 'opacity-0']" @load="imageLoadedNav = true"
+                        @error="imageLoadedNav = false" />
+                    <span v-if="!imageLoadedNav"
+                        class="absolute inset-0 flex items-center justify-center text-sm font-black tracking-[0.25em]">
+                        HH
+                    </span>
+                </div>
                 <span>
                     <span :class="themeStyles.accentText"
                         class="block text-sm font-semibold tracking-[0.24em] uppercase">Hussein Hany</span>
@@ -39,6 +48,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import ThemeToggle from './ThemeToggle.vue'
 
 const props = defineProps({
@@ -66,5 +76,6 @@ const props = defineProps({
 
 defineEmits(['toggle-theme'])
 
+const imageLoadedNav = ref(false)
 const isActive = (sectionId) => sectionId === props.activeSection
 </script>
