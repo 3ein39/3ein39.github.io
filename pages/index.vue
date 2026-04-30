@@ -1,226 +1,308 @@
 <template>
-    <div class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
-        <!-- Background Animation -->
-        <div class="area">
-            <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div>
-        <!-- End Background Animation -->
+    <main :class="themeStyles.page"
+        class="relative min-h-screen overflow-hidden antialiased transition-colors duration-300">
+        <LayoutBackdrop :overlay-class="themeStyles.backgroundOverlay" />
 
-        <img src="https://www.svgrepo.com/show/426192/cogs-settings.svg" alt="Logo" class="mb-8 h-40 z-10" />
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-gray-700 dark:text-white mb-4 z-10">
-            Portfolio is under maintenance
-        </h1>
-        <p class="text-center text-gray-500 dark:text-gray-300 text-lg md:text-xl lg:text-2xl mb-8 z-10">
-            Welcome to <span class="font-bold">Hussein Hany</span>'s portfolio! I'm working hard to improve the user
-            experience. Stay tuned!
-        </p>
-        <div class="flex space-x-4 mb-8 z-10">
-            <a href="mailto:hussein.hany.cs@gmail.com"
-                class="bg-[#8f94fb] bg-opacity-25 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded transition-colors duration-300">
-                Contact Me
-            </a>
-            <a href="https://drive.google.com/file/d/1sAmfjnjIAwaKPi_3oxt3XWzsbTCCxWkQ/view?usp=sharing" target="_blank"
-                class="border-2 border-indigo-600 text-indigo-600 font-bold py-3 px-6 rounded dark:text-white dark:border-white hover:bg-indigo-500 hover:text-white transition-colors duration-300">
-                Download CV
-            </a>
-        </div>
-        <div class="flex space-x-4 z-10">
-            <!-- <a href="https://www.linkedin.com/in/3ein39/" target="_blank"
-                class="text-indigo-600 dark:text-white text-2xl hover:text-indigo-800 dark:hover:text-indigo-400 transition-colors duration-300">
-                LinkedIn
-            </a> -->
-            <a href="https://www.linkedin.com/in/3ein39/" target="_blank">
-                <IconsLinkedin />
-            </a>
+        <div class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+            <PortfolioNavbar :active-section="activeSection" :is-dark="isDark" :nav-items="navItems"
+                :resume-url="resumeUrl" :theme-styles="themeStyles" @toggle-theme="toggleTheme" />
 
+            <HeroSection :github-url="githubUrl" :highlights="highlights" :linkedin-url="linkedinUrl"
+                :resume-url="resumeUrl" :theme-styles="themeStyles" />
+
+            <AboutSection :milestones="milestones" :theme-styles="themeStyles" />
+
+            <ProjectsSection :github-url="githubUrl" :linkedin-url="linkedinUrl" :projects="projects"
+                :theme-styles="themeStyles" />
+
+            <SkillsSection :skill-groups="skillGroups" :theme-styles="themeStyles" />
+
+            <TestimonialsSection :recommendation="recommendation" :theme-styles="themeStyles" />
+
+            <ContactSection :email-address="emailAddress" :github-url="githubUrl" :linkedin-url="linkedinUrl"
+                :resume-url="resumeUrl" :theme-styles="themeStyles" />
+
+            <PortfolioFooter :left-text="footerLeftText" :right-text="footerRightText" :theme-styles="themeStyles" />
         </div>
-    </div>
+    </main>
 </template>
 
 <script setup>
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import AboutSection from '~/components/portfolio/AboutSection.vue'
+import ContactSection from '~/components/portfolio/ContactSection.vue'
+import HeroSection from '~/components/portfolio/HeroSection.vue'
+import LayoutBackdrop from '~/components/portfolio/LayoutBackdrop.vue'
+import PortfolioFooter from '~/components/portfolio/PortfolioFooter.vue'
+import PortfolioNavbar from '~/components/portfolio/PortfolioNavbar.vue'
+import ProjectsSection from '~/components/portfolio/ProjectsSection.vue'
+import TestimonialsSection from '~/components/portfolio/TestimonialsSection.vue'
+import SkillsSection from '~/components/portfolio/SkillsSection.vue'
+
+const emailAddress = 'hussein.hany.cs@gmail.com'
+const linkedinUrl = 'https://www.linkedin.com/in/3ein39/'
+const githubUrl = 'https://github.com/3ein39'
+const resumeUrl = 'https://drive.google.com/file/d/1sAmfjnjIAwaKPi_3oxt3XWzsbTCCxWkQ/view?usp=sharing'
+
+useSeoMeta({
+    title: 'Hussein Hany | Frontend Developer',
+    description:
+        'Hussein Hany is a Vue and Nuxt frontend developer who builds fast, accessible web apps and full-stack projects.',
+    ogTitle: 'Hussein Hany | Frontend Developer',
+    ogDescription:
+        'Vue.js and Nuxt developer with full-stack experience, strong problem-solving skills, and mentoring experience.',
+    ogType: 'website',
+    twitterCard: 'summary_large_image',
+})
+
+useHead({
+    htmlAttrs: {
+        lang: 'en',
+    },
+})
+
+const navItems = [
+    { label: 'About', href: '#about', sectionId: 'about' },
+    { label: 'Projects', href: '#projects', sectionId: 'projects' },
+    { label: 'Skills', href: '#skills', sectionId: 'skills' },
+    { label: 'Testimonials', href: '#testimonials', sectionId: 'testimonials' },
+    { label: 'Contact', href: '#contact', sectionId: 'contact' },
+]
+
+const highlights = [
+    { label: 'Frontend', value: 'Vue / Nuxt' },
+    { label: 'Competitive Programming', value: '600+ solved' },
+    { label: 'Mentoring', value: '100+ students' },
+    { label: 'Profile', value: 'ICPC finalist' },
+]
+
+const milestones = [
+    {
+        title: 'Computer Science graduate',
+        description: 'B.Sc. in Computer Science from Fayoum University, completed in 2025.',
+    },
+    {
+        title: 'Vue / Nuxt focus',
+        description: 'Hands-on frontend work with Vue.js, Nuxt, TailwindCSS, and modern JavaScript tooling.',
+    },
+    {
+        title: 'Mentor and contest problem solver',
+        description: 'Guided more than 100 students while building a strong competitive programming track record.',
+    },
+]
+
+const projects = [
+    {
+        title: 'ServiceSphere',
+        category: 'Mobile marketplace',
+        year: 'Featured',
+        summary:
+            'An AI-assisted services marketplace mobile app with real-time chat, bilingual support, and a product flow built around trust and fast discovery.',
+        stack: ['React Native', 'AI', 'Real-time chat', 'Bilingual UX'],
+        challenge:
+            'The main challenge was making service discovery and direct communication feel quick without losing clarity or trust.',
+        solution:
+            'I focused on readable cards, sharp messaging, and a chat-first flow so the app stayed useful even as the feature set grew.',
+        outcome:
+            'The project shows product thinking, mobile UX decisions, and the ability to connect design goals with implementation.',
+    },
+    {
+        title: 'YelpCamp',
+        category: 'Web application',
+        year: 'Featured',
+        summary:
+            'A full-stack campground review app with authentication, campground CRUD flows, and map-based location discovery.',
+        stack: ['Node.js', 'Express', 'MongoDB', 'Passport', 'Mapbox'],
+        challenge:
+            'The app needed structured user flows, secure access control, and a data model that could support rich campground pages.',
+        solution:
+            'I implemented authenticated workflows, reusable forms, and location-aware details so the application felt complete rather than demo-like.',
+        outcome:
+            'This project demonstrates back-end structure, database work, and the ability to ship a practical full-stack product.',
+    },
+    {
+        title: 'Leaf Manager',
+        category: 'Open-source contribution',
+        year: 'Community',
+        summary:
+            'An open-source contribution in an environmental data tool, showing comfort with shared codebases and collaborative delivery.',
+        stack: ['Open source', 'Collaboration', 'Git', 'JavaScript'],
+        challenge:
+            'Working inside an existing project required understanding patterns quickly and keeping the change set easy to review.',
+        solution:
+            'I kept the contribution focused, readable, and aligned with the existing code style and workflow.',
+        outcome:
+            'This work reinforces maintainability, teamwork, and the habit of respecting existing architecture.',
+    },
+]
+
+const skillGroups = [
+    {
+        title: 'Frontend',
+        items: ['Vue.js', 'Nuxt 3', 'TailwindCSS', 'JavaScript', 'TypeScript', 'React', 'React Native'],
+    },
+    {
+        title: 'Backend',
+        items: ['Node.js', 'NestJS', 'Express.js', 'GraphQL', 'REST', 'MongoDB', 'PostgreSQL'],
+    },
+    {
+        title: 'Engineering',
+        items: ['Git', 'CI/CD', 'Playwright', 'Testing', 'Docker', 'Linux'],
+    },
+    {
+        title: 'Strengths',
+        items: ['Problem solving', 'Mentoring', 'Algorithms', 'System design', 'Communication'],
+    },
+]
+
+const recommendation = {
+    author: 'Nick Bankem',
+    role: 'Frontend Developer at Wisemen',
+    company: 'Wisemen',
+    date: 'February 12, 2026',
+    photoUrl:
+        'https://media.licdn.com/dms/image/v2/D4E03AQF69tzTjt5wEA/profile-displayphoto-scale_100_100/B4EZ1sotDbHcAc-/0/1775644107240?e=1779321600&v=beta&t=E5L0jC5pVYkjdEYKa7QvObLC81BziSnaamkGznIRalI',
+    paragraphs: [
+        'I had the pleasure of working with Hussein and can confidently say he was a great addition to the team. He adapted quickly to the way we work and consistently impressed us with his responsiveness and commitment.',
+        "Hussein communicates clearly and openly, he isn't afraid to share his needs or provide constructive feedback, which made collaboration smooth and effective. He's proactive, reliable, and never hesitates to roll up his sleeves and get his hands dirty when needed.",
+        'Overall, it was truly a pleasure working with him. Hussein is polite, professional, and a strong team player. I would gladly work with him again in the future.',
+    ],
+}
+
+const footerLeftText = 'Built for Hussein Hany with Vue 3, Nuxt 3, and Tailwind CSS.'
+const footerRightText = 'One-page portfolio focused on accessibility, performance, and clarity.'
+
+const theme = ref('dark')
+const activeSection = ref('top')
+let sectionObserver
+
+const isDark = computed(() => theme.value === 'dark')
+const themeStyles = computed(() => ({
+    page: isDark.value ? 'bg-[#06111f] text-slate-100' : 'bg-[#f5f0e6] text-slate-950',
+    panel: isDark.value ? 'border-white/10 bg-white/5' : 'border-slate-200/90 bg-white/90',
+    panelSoft: isDark.value ? 'border-white/10 bg-white/5' : 'border-slate-200/80 bg-white/85',
+    card: isDark.value ? 'border-white/10 bg-slate-950/45' : 'border-slate-200 bg-white',
+    textMuted: isDark.value ? 'text-slate-300' : 'text-slate-700',
+    accentText: isDark.value ? 'text-cyan-300' : 'text-sky-800',
+    accentBg: isDark.value ? 'bg-cyan-300' : 'bg-sky-700',
+    accentBorder: isDark.value ? 'border-cyan-400/30' : 'border-sky-700/20',
+    brandMark: isDark.value ? 'bg-white/10 text-cyan-200' : 'bg-slate-950 text-white',
+    navLink: isDark.value
+        ? 'text-slate-300 hover:bg-white/10 hover:text-white'
+        : 'text-slate-700 hover:bg-slate-950 hover:text-white',
+    navLinkActive: isDark.value ? 'bg-white/15 text-white' : 'bg-slate-950 text-white',
+    primaryButton: isDark.value
+        ? 'bg-cyan-400 text-slate-950 hover:bg-cyan-300'
+        : 'bg-slate-950 text-white hover:bg-slate-800',
+    secondaryButton: isDark.value
+        ? 'bg-white/5 text-slate-100 hover:bg-white/10'
+        : 'bg-white text-slate-950 hover:bg-slate-100',
+    chip: isDark.value ? 'border-white/10 bg-white/5 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800',
+    input: isDark.value
+        ? 'border-white/10 bg-slate-950/45 text-slate-100 placeholder:text-slate-500'
+        : 'border-slate-200 bg-white text-slate-950 placeholder:text-slate-400',
+    pill: isDark.value ? 'border-white/10 bg-white/5 text-slate-200' : 'border-slate-200 bg-white text-slate-800',
+    avatar: isDark.value ? 'bg-gradient-to-br from-cyan-400 to-sky-600 text-slate-950' : 'bg-gradient-to-br from-slate-950 to-slate-700 text-white',
+    backgroundOverlay: isDark.value
+        ? 'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.07),_transparent_35%),linear-gradient(to_bottom,_transparent,_rgba(2,6,23,0.14))]'
+        : 'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.72),_transparent_32%),linear-gradient(to_bottom,_transparent,_rgba(15,23,42,0.08))]',
+    heroGlow: isDark.value
+        ? 'bg-[radial-gradient(circle_at_top_right,_rgba(34,211,238,0.16),_transparent_42%)]'
+        : 'bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.12),_transparent_42%)]',
+    footerBorder: isDark.value ? 'border-white/10' : 'border-slate-200',
+}))
+
+const applyTheme = (nextTheme) => {
+    theme.value = nextTheme
+
+    if (typeof document === 'undefined') {
+        return
+    }
+
+    document.documentElement.style.colorScheme = nextTheme
+    document.documentElement.classList.toggle('dark', nextTheme === 'dark')
+
+    if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('hussein-portfolio-theme', nextTheme)
+    }
+}
+
+const toggleTheme = () => {
+    applyTheme(isDark.value ? 'light' : 'dark')
+}
+
+onMounted(() => {
+    const storedTheme = localStorage.getItem('hussein-portfolio-theme')
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    applyTheme(storedTheme ?? preferredTheme)
+
+    sectionObserver = new IntersectionObserver(
+        (entries) => {
+            const visibleEntry = entries
+                .filter((entry) => entry.isIntersecting)
+                .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0]
+
+            if (visibleEntry?.target?.id) {
+                activeSection.value = visibleEntry.target.id
+            }
+        },
+        {
+            threshold: [0.15, 0.3, 0.55],
+            rootMargin: '-22% 0px -60% 0px',
+        },
+    )
+
+    document.querySelectorAll('[data-section]').forEach((section) => {
+        sectionObserver.observe(section)
+    })
+})
+
+onBeforeUnmount(() => {
+    sectionObserver?.disconnect()
+})
 </script>
 
 <style scoped>
-/* Start Animations */
-@-webkit-keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0;
-    }
-
-    to {
-        top: 0;
-        opacity: 1;
-    }
+.text-balance {
+    text-wrap: balance;
 }
 
-@keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0;
-    }
+@keyframes float {
 
-    to {
-        top: 0;
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes zoomIn {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale3d(0.3, 0.3, 0.3);
-        transform: scale3d(0.3, 0.3, 0.3);
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-@keyframes zoomIn {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale3d(0.3, 0.3, 0.3);
-        transform: scale3d(0.3, 0.3, 0.3);
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-/* End Animations */
-
-/* Start Background Animation */
-.area {
-    background: #4e54c8;
-    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: -1;
-}
-
-.circles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 96%;
-    overflow: hidden;
-}
-
-.circles li {
-    position: absolute;
-    display: block;
-    list-style: none;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    animation: animate 25s linear infinite;
-    bottom: -150px;
-}
-
-.circles li:nth-child(1) {
-    left: 25%;
-    width: 80px;
-    height: 80px;
-    animation-delay: 0s;
-}
-
-.circles li:nth-child(2) {
-    left: 10%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 2s;
-    animation-duration: 12s;
-}
-
-.circles li:nth-child(3) {
-    left: 70%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 4s;
-}
-
-.circles li:nth-child(4) {
-    left: 40%;
-    width: 60px;
-    height: 60px;
-    animation-delay: 0s;
-    animation-duration: 18s;
-}
-
-.circles li:nth-child(5) {
-    left: 65%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 0s;
-}
-
-.circles li:nth-child(6) {
-    left: 75%;
-    width: 110px;
-    height: 110px;
-    animation-delay: 3s;
-}
-
-.circles li:nth-child(7) {
-    left: 35%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 7s;
-}
-
-.circles li:nth-child(8) {
-    left: 50%;
-    width: 25px;
-    height: 25px;
-    animation-delay: 15s;
-    animation-duration: 45s;
-}
-
-.circles li:nth-child(9) {
-    left: 20%;
-    width: 15px;
-    height: 15px;
-    animation-delay: 2s;
-    animation-duration: 35s;
-}
-
-.circles li:nth-child(10) {
-    left: 85%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 0s;
-    animation-duration: 11s;
-}
-
-@keyframes animate {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        border-radius: 0;
-    }
-
+    0%,
     100% {
-        transform: translateY(-1000px) rotate(720deg);
-        opacity: 0;
-        border-radius: 50%;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(0, -18px, 0) scale(1.04);
     }
 }
 
-/* End Background Animation */
+.animate-float {
+    animation: float 14s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: float 18s ease-in-out infinite;
+    animation-delay: -4s;
+}
+
+.animate-float-slower {
+    animation: float 22s ease-in-out infinite;
+    animation-delay: -9s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .animate-float,
+    .animate-float-delayed,
+    .animate-float-slower {
+        animation: none;
+    }
+
+    * {
+        scroll-behavior: auto !important;
+    }
+}
 </style>
