@@ -9,5 +9,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     compatibilityDate: '2026-04-30',
+    prerender: {
+      routes: ['/api/portfolio/en', '/api/portfolio/ar'],
+    },
   },
 })

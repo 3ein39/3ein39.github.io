@@ -3,12 +3,12 @@
         <div
             :class="[themeStyles.panel, 'mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 rounded-3xl border px-4 py-4 shadow-2xl backdrop-blur-xl sm:px-6']">
             <a href="#top"
-                class="group flex items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                :class="[isRtl ? 'text-right' : 'text-left', 'group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']"
                 @click="onAnchorClick($event, '#top')">
                 <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-2xl border"
                     :class="[themeStyles.brandMark, 'flex items-center justify-center']">
                     <img src="https://media.licdn.com/dms/image/v2/D5603AQFqPp_1DAWlPQ/profile-displayphoto-scale_200_200/B56Zs9zDzEJUAc-/0/1766268355199?e=1779321600&v=beta&t=0Yr6u67rlrihiC8Mn1t6NbWv-Gt1Ztj6D4-iWoXxPUo"
-                        alt="Hussein Hany profile" class="h-full w-full object-cover transition-opacity duration-300"
+                        :alt="portfolio.profile.imageAlt" class="h-full w-full object-cover transition-opacity duration-300"
                         :class="[imageLoadedNav ? 'opacity-100' : 'opacity-0']" @load="imageLoadedNav = true"
                         @error="imageLoadedNav = false" />
                     <span v-if="!imageLoadedNav"
@@ -18,9 +18,8 @@
                 </div>
                 <span>
                     <span :class="themeStyles.accentText"
-                        class="block text-sm font-semibold tracking-[0.24em] uppercase">Hussein Hany</span>
-                    <span :class="themeStyles.textMuted" class="block text-sm">Frontend Developer · Vue/Nuxt ·
-                        MEVN</span>
+                        class="block text-sm font-semibold tracking-[0.24em] uppercase">{{ portfolio.profile.name }}</span>
+                    <span :class="themeStyles.textMuted" class="block text-sm">{{ portfolio.profile.navSubtitle }}</span>
                 </span>
             </a>
 
@@ -36,10 +35,13 @@
             </nav>
 
             <div class="flex items-center gap-3">
+                <LanguageToggle :aria-label="portfolio.ui.switchLanguage" :locale="locale" :theme-styles="themeStyles"
+                    @toggle="$emit('toggle-locale')" />
+
                 <a :href="resumeUrl" target="_blank" rel="noreferrer"
                     :class="[themeStyles.secondaryButton, 'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']">
-                    <span class="hidden sm:inline">Download CV</span>
-                    <span class="sm:hidden">CV</span>
+                    <span class="hidden sm:inline">{{ portfolio.ui.downloadCv }}</span>
+                    <span class="sm:hidden">{{ portfolio.ui.cvShort }}</span>
                 </a>
 
                 <ThemeToggle :model-value="!isDark" @update:model-value="$emit('toggle-theme')" />
@@ -50,10 +52,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import LanguageToggle from './LanguageToggle.vue'
 import ThemeToggle from './ThemeToggle.vue'
 
 const props = defineProps({
     themeStyles: {
+        type: Object,
+        required: true,
+    },
+    portfolio: {
         type: Object,
         required: true,
     },
@@ -73,9 +80,17 @@ const props = defineProps({
         type: Boolean,
         required: true,
     },
+    locale: {
+        type: String,
+        required: true,
+    },
+    isRtl: {
+        type: Boolean,
+        default: false,
+    },
 })
 
-defineEmits(['toggle-theme'])
+defineEmits(['toggle-theme', 'toggle-locale'])
 
 const { onAnchorClick } = useSmoothScroll()
 

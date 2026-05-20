@@ -3,26 +3,38 @@
         class="relative min-h-screen overflow-hidden antialiased transition-colors duration-300">
         <LayoutBackdrop :overlay-class="themeStyles.backgroundOverlay" />
 
-        <div class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-16 pt-28 sm:px-6 lg:px-8">
-            <PortfolioNavbar :active-section="activeSection" :is-dark="isDark" :nav-items="navItems"
-                :resume-url="resumeUrl" :theme-styles="themeStyles" @toggle-theme="toggleTheme" />
+        <div v-if="isLoading && !portfolio"
+            class="relative mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center px-4">
+            <p :class="themeStyles.textMuted" class="text-sm">Loading…</p>
+        </div>
 
-            <HeroSection :github-url="githubUrl" :linkedin-url="linkedinUrl" :skills="skills"
+        <div v-else-if="portfolio"
+            class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+            <PortfolioNavbar :active-section="activeSection" :is-dark="isDark" :is-rtl="isRtl" :locale="locale"
+                :nav-items="portfolio.nav" :portfolio="portfolio" :resume-url="portfolio.links.resume"
+                :theme-styles="themeStyles" @toggle-locale="toggleLocale" @toggle-theme="toggleTheme" />
+
+            <HeroSection :github-url="portfolio.links.github" :hero="portfolio.hero"
+                :linkedin-url="portfolio.links.linkedin" :profile="portfolio.profile" :skills="portfolio.skills"
+                :theme-styles="themeStyles" :ui="portfolio.ui" />
+
+            <ProjectsSection :github-url="portfolio.links.github" :projects="portfolio.projects"
+                :section="portfolio.sections.work" :theme-styles="themeStyles" />
+
+            <TestimonialsSection :recommendation="portfolio.recommendation"
+                :section="portfolio.sections.recommendations" :theme-styles="themeStyles" />
+
+            <ContactSection :email-address="portfolio.links.email" :resume-url="portfolio.links.resume"
+                :section="portfolio.sections.contact" :theme-styles="themeStyles" />
+
+            <PortfolioFooter :left-text="portfolio.footer.left" :right-text="footerRightText"
                 :theme-styles="themeStyles" />
-
-            <ProjectsSection :github-url="githubUrl" :projects="projects" :theme-styles="themeStyles" />
-
-            <TestimonialsSection :recommendation="recommendation" :theme-styles="themeStyles" />
-
-            <ContactSection :email-address="emailAddress" :resume-url="resumeUrl" :theme-styles="themeStyles" />
-
-            <PortfolioFooter :left-text="footerLeftText" :right-text="footerRightText" :theme-styles="themeStyles" />
         </div>
     </main>
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import ContactSection from '~/components/portfolio/ContactSection.vue'
 import HeroSection from '~/components/portfolio/HeroSection.vue'
 import LayoutBackdrop from '~/components/portfolio/LayoutBackdrop.vue'
@@ -31,84 +43,13 @@ import PortfolioNavbar from '~/components/portfolio/PortfolioNavbar.vue'
 import ProjectsSection from '~/components/portfolio/ProjectsSection.vue'
 import TestimonialsSection from '~/components/portfolio/TestimonialsSection.vue'
 
-const emailAddress = 'hussein.hany.cs@gmail.com'
-const linkedinUrl = 'https://www.linkedin.com/in/3ein39/'
-const githubUrl = 'https://github.com/3ein39'
-const resumeUrl = 'https://drive.google.com/file/d/16pwMcAf-qPjMAhWDyhZQQBl7v9Ycgtic/view?usp=drive_link'
+const portfolioController = usePortfolio()
 
-useSeoMeta({
-    title: 'Hussein Hany | Frontend Developer',
-    description:
-        'Hussein Hany is a Vue and Nuxt frontend developer who builds fast, accessible web apps.',
-    ogTitle: 'Hussein Hany | Frontend Developer',
-    ogDescription:
-        'Vue.js and Nuxt developer with full-stack experience, strong problem-solving skills, and mentoring experience.',
-    ogType: 'website',
-    twitterCard: 'summary_large_image',
-})
+const portfolio = computed(() => portfolioController.portfolio.value)
+const isLoading = computed(() => portfolioController.isLoading.value)
+const locale = computed(() => portfolioController.locale.value)
+const isRtl = computed(() => portfolioController.isRtl.value)
 
-useHead({
-    htmlAttrs: {
-        lang: 'en',
-    },
-})
-
-const navItems = [
-    { label: 'Work', href: '#projects', sectionId: 'projects' },
-    { label: 'Recommendations', href: '#testimonials', sectionId: 'testimonials' },
-    { label: 'Contact', href: '#contact', sectionId: 'contact' },
-]
-
-const skills = [
-    'Vue.js',
-    'Nuxt',
-    'TypeScript',
-    'TailwindCSS',
-    'Node.js',
-    'NestJS',
-    'MongoDB',
-    'PostgreSQL',
-]
-
-const projects = [
-    {
-        title: 'ServiceSphere',
-        category: 'Mobile marketplace',
-        summary:
-            'AI-assisted services marketplace with real-time chat and bilingual UX, built around trust and fast discovery.',
-        stack: ['React Native', 'AI', 'Real-time chat'],
-    },
-    {
-        title: 'YelpCamp',
-        category: 'Full-stack web app',
-        summary:
-            'Campground review app with auth, CRUD flows, and map-based discovery using Node, Express, and MongoDB.',
-        stack: ['Node.js', 'Express', 'MongoDB', 'Mapbox'],
-    },
-    {
-        title: 'Leaf Manager',
-        category: 'Open source',
-        summary:
-            'Contribution to an environmental data tool—focused changes aligned with the existing codebase and workflow.',
-        stack: ['JavaScript', 'Git', 'Collaboration'],
-    },
-]
-
-const recommendation = {
-    author: 'Nick Bankem',
-    role: 'Frontend Developer at Wisemen',
-    company: 'Wisemen',
-    date: 'February 12, 2026',
-    photoUrl:
-        'https://media.licdn.com/dms/image/v2/D4E03AQF69tzTjt5wEA/profile-displayphoto-scale_100_100/B4EZ1sotDbHcAc-/0/1775644107240?e=1779321600&v=beta&t=E5L0jC5pVYkjdEYKa7QvObLC81BziSnaamkGznIRalI',
-    paragraphs: [
-        'I had the pleasure of working with Hussein and can confidently say he was a great addition to the team. He adapted quickly to the way we work and consistently impressed us with his responsiveness and commitment.',
-        "Hussein communicates clearly and openly, he isn't afraid to share his needs or provide constructive feedback, which made collaboration smooth and effective. He's proactive, reliable, and never hesitates to roll up his sleeves and get his hands dirty when needed.",
-        'Overall, it was truly a pleasure working with him. Hussein is polite, professional, and a strong team player. I would gladly work with him again in the future.',
-    ],
-}
-
-const footerLeftText = 'Built with Vue 3, Nuxt 3, and Tailwind CSS.'
 const footerRightText = ''
 
 const theme = ref('dark')
@@ -151,6 +92,51 @@ const themeStyles = computed(() => ({
     footerBorder: isDark.value ? 'border-white/10' : 'border-slate-200',
 }))
 
+await useAsyncData('portfolio-content', async () => {
+    if (!portfolioController.portfolio.value) {
+        await portfolioController.init()
+    }
+
+    return portfolioController.portfolio.value
+})
+
+watch(
+    portfolio,
+    (content) => {
+        if (!content) {
+            return
+        }
+
+        useSeoMeta({
+            title: content.seo.title,
+            description: content.seo.description,
+            ogTitle: content.seo.ogTitle,
+            ogDescription: content.seo.ogDescription,
+            ogType: 'website',
+            twitterCard: 'summary_large_image',
+        })
+
+        useHead({
+            htmlAttrs: {
+                lang: content.locale,
+                dir: content.dir,
+            },
+            link: content.locale === 'ar'
+                ? [
+                    {
+                        rel: 'stylesheet',
+                        href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap',
+                    },
+                ]
+                : [],
+            bodyAttrs: {
+                class: content.locale === 'ar' ? 'font-arabic' : '',
+            },
+        })
+    },
+    { immediate: true },
+)
+
 const applyTheme = (nextTheme) => {
     theme.value = nextTheme
 
@@ -170,10 +156,16 @@ const toggleTheme = () => {
     applyTheme(isDark.value ? 'light' : 'dark')
 }
 
-onMounted(() => {
-    const storedTheme = localStorage.getItem('hussein-portfolio-theme')
-    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    applyTheme(storedTheme ?? preferredTheme)
+const toggleLocale = async () => {
+    await portfolioController.toggleLocale()
+}
+
+const setupSectionObserver = () => {
+    if (typeof document === 'undefined') {
+        return
+    }
+
+    sectionObserver?.disconnect()
 
     sectionObserver = new IntersectionObserver(
         (entries) => {
@@ -194,6 +186,24 @@ onMounted(() => {
     document.querySelectorAll('[data-section]').forEach((section) => {
         sectionObserver.observe(section)
     })
+}
+
+onMounted(async () => {
+    const storedTheme = localStorage.getItem('hussein-portfolio-theme')
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    applyTheme(storedTheme ?? preferredTheme)
+
+    if (!portfolio.value) {
+        await portfolioController.init()
+    }
+
+    setupSectionObserver()
+})
+
+watch(portfolio, (content) => {
+    if (content) {
+        nextTick(() => setupSectionObserver())
+    }
 })
 
 onBeforeUnmount(() => {
@@ -201,11 +211,13 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style scoped>
-.text-balance {
-    text-wrap: balance;
+<style>
+.font-arabic {
+    font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
 }
+</style>
 
+<style scoped>
 @media (prefers-reduced-motion: reduce) {
     * {
         scroll-behavior: auto !important;
