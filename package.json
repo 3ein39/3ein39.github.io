@@ -11,9 +11,11 @@
     "deploy": "nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
+    "@vueuse/motion": "^3.0.3",
     "nuxt": "^3.10.2",
     "vue": "^3.4.19",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue-scrollto": "^2.20.0"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",

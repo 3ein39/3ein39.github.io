@@ -3,7 +3,8 @@
         <div
             :class="[themeStyles.panel, 'mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 rounded-3xl border px-4 py-4 shadow-2xl backdrop-blur-xl sm:px-6']">
             <a href="#top"
-                class="group flex items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent">
+                class="group flex items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                @click="onAnchorClick($event, '#top')">
                 <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-2xl border"
                     :class="[themeStyles.brandMark, 'flex items-center justify-center']">
                     <img src="https://media.licdn.com/dms/image/v2/D5603AQFqPp_1DAWlPQ/profile-displayphoto-scale_200_200/B56Zs9zDzEJUAc-/0/1766268355199?e=1779321600&v=beta&t=0Yr6u67rlrihiC8Mn1t6NbWv-Gt1Ztj6D4-iWoXxPUo"
@@ -29,7 +30,7 @@
                         ? themeStyles.navLinkActive
                         : themeStyles.navLink,
                     'rounded-full px-4 py-2 font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
-                ]">
+                ]" @click="onAnchorClick($event, item.href)">
                     {{ item.label }}
                 </a>
             </nav>
@@ -75,6 +76,8 @@ const props = defineProps({
 })
 
 defineEmits(['toggle-theme'])
+
+const { onAnchorClick } = useSmoothScroll()
 
 const imageLoadedNav = ref(false)
 const isActive = (sectionId) => sectionId === props.activeSection

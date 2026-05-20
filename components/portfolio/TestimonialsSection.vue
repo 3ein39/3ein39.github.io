@@ -1,9 +1,10 @@
 <template>
     <section id="testimonials" data-section="testimonials" class="scroll-mt-28 py-8 lg:py-12">
-        <SectionHeading eyebrow="Testimonials" title="Social proof that reads cleanly."
-            description="LinkedIn does not expose recommendations through a public API, so this text is entered manually from the exact recommendation on your profile."
+        <SectionHeading eyebrow="Recommendations" title="What colleagues say."
+            description="From a LinkedIn recommendation on my profile."
             :theme-styles="themeStyles" />
 
+        <SectionReveal>
         <div :class="[themeStyles.panel, 'rounded-[2rem] border p-6 shadow-2xl backdrop-blur-xl lg:p-8']">
             <article :class="[themeStyles.card, 'overflow-hidden rounded-[1.75rem] border']">
                 <div
@@ -53,11 +54,13 @@
                 </blockquote>
             </article>
         </div>
+        </SectionReveal>
     </section>
 </template>
 
 <script setup>
 import SectionHeading from './SectionHeading.vue'
+import SectionReveal from './SectionReveal.vue'
 
 defineProps({
     themeStyles: {

@@ -7,20 +7,14 @@
             <PortfolioNavbar :active-section="activeSection" :is-dark="isDark" :nav-items="navItems"
                 :resume-url="resumeUrl" :theme-styles="themeStyles" @toggle-theme="toggleTheme" />
 
-            <HeroSection :github-url="githubUrl" :highlights="highlights" :linkedin-url="linkedinUrl"
-                :resume-url="resumeUrl" :theme-styles="themeStyles" />
-
-            <AboutSection :milestones="milestones" :theme-styles="themeStyles" />
-
-            <ProjectsSection :github-url="githubUrl" :linkedin-url="linkedinUrl" :projects="projects"
+            <HeroSection :github-url="githubUrl" :linkedin-url="linkedinUrl" :skills="skills"
                 :theme-styles="themeStyles" />
 
-            <SkillsSection :skill-groups="skillGroups" :theme-styles="themeStyles" />
+            <ProjectsSection :github-url="githubUrl" :projects="projects" :theme-styles="themeStyles" />
 
             <TestimonialsSection :recommendation="recommendation" :theme-styles="themeStyles" />
 
-            <ContactSection :email-address="emailAddress" :github-url="githubUrl" :linkedin-url="linkedinUrl"
-                :resume-url="resumeUrl" :theme-styles="themeStyles" />
+            <ContactSection :email-address="emailAddress" :resume-url="resumeUrl" :theme-styles="themeStyles" />
 
             <PortfolioFooter :left-text="footerLeftText" :right-text="footerRightText" :theme-styles="themeStyles" />
         </div>
@@ -29,7 +23,6 @@
 
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import AboutSection from '~/components/portfolio/AboutSection.vue'
 import ContactSection from '~/components/portfolio/ContactSection.vue'
 import HeroSection from '~/components/portfolio/HeroSection.vue'
 import LayoutBackdrop from '~/components/portfolio/LayoutBackdrop.vue'
@@ -37,7 +30,6 @@ import PortfolioFooter from '~/components/portfolio/PortfolioFooter.vue'
 import PortfolioNavbar from '~/components/portfolio/PortfolioNavbar.vue'
 import ProjectsSection from '~/components/portfolio/ProjectsSection.vue'
 import TestimonialsSection from '~/components/portfolio/TestimonialsSection.vue'
-import SkillsSection from '~/components/portfolio/SkillsSection.vue'
 
 const emailAddress = 'hussein.hany.cs@gmail.com'
 const linkedinUrl = 'https://www.linkedin.com/in/3ein39/'
@@ -62,96 +54,43 @@ useHead({
 })
 
 const navItems = [
-    { label: 'About', href: '#about', sectionId: 'about' },
-    { label: 'Projects', href: '#projects', sectionId: 'projects' },
-    { label: 'Skills', href: '#skills', sectionId: 'skills' },
-    { label: 'Testimonials', href: '#testimonials', sectionId: 'testimonials' },
+    { label: 'Work', href: '#projects', sectionId: 'projects' },
+    { label: 'Recommendations', href: '#testimonials', sectionId: 'testimonials' },
     { label: 'Contact', href: '#contact', sectionId: 'contact' },
 ]
 
-const highlights = [
-    { label: 'Frontend', value: 'Vue / Nuxt' },
-    { label: 'Competitive Programming', value: '600+ solved' },
-    { label: 'Mentoring', value: '100+ students' },
-    { label: 'Profile', value: 'ICPC finalist' },
-]
-
-const milestones = [
-    {
-        title: 'Computer Science graduate',
-        description: 'B.Sc. in Computer Science from Fayoum University, completed in 2025.',
-    },
-    {
-        title: 'Vue / Nuxt focus',
-        description: 'Hands-on frontend work with Vue.js, Nuxt, TailwindCSS, and modern JavaScript tooling.',
-    },
-    {
-        title: 'Mentor and contest problem solver',
-        description: 'Guided more than 100 students while building a strong competitive programming track record.',
-    },
+const skills = [
+    'Vue.js',
+    'Nuxt',
+    'TypeScript',
+    'TailwindCSS',
+    'Node.js',
+    'NestJS',
+    'MongoDB',
+    'PostgreSQL',
 ]
 
 const projects = [
     {
         title: 'ServiceSphere',
         category: 'Mobile marketplace',
-        year: 'Featured',
         summary:
-            'An AI-assisted services marketplace mobile app with real-time chat, bilingual support, and a product flow built around trust and fast discovery.',
-        stack: ['React Native', 'AI', 'Real-time chat', 'Bilingual UX'],
-        challenge:
-            'The main challenge was making service discovery and direct communication feel quick without losing clarity or trust.',
-        solution:
-            'I focused on readable cards, sharp messaging, and a chat-first flow so the app stayed useful even as the feature set grew.',
-        outcome:
-            'The project shows product thinking, mobile UX decisions, and the ability to connect design goals with implementation.',
+            'AI-assisted services marketplace with real-time chat and bilingual UX, built around trust and fast discovery.',
+        stack: ['React Native', 'AI', 'Real-time chat'],
     },
     {
         title: 'YelpCamp',
-        category: 'Web application',
-        year: 'Featured',
+        category: 'Full-stack web app',
         summary:
-            'A full-stack campground review app with authentication, campground CRUD flows, and map-based location discovery.',
-        stack: ['Node.js', 'Express', 'MongoDB', 'Passport', 'Mapbox'],
-        challenge:
-            'The app needed structured user flows, secure access control, and a data model that could support rich campground pages.',
-        solution:
-            'I implemented authenticated workflows, reusable forms, and location-aware details so the application felt complete rather than demo-like.',
-        outcome:
-            'This project demonstrates back-end structure, database work, and the ability to ship a practical full-stack product.',
+            'Campground review app with auth, CRUD flows, and map-based discovery using Node, Express, and MongoDB.',
+        stack: ['Node.js', 'Express', 'MongoDB', 'Mapbox'],
     },
     {
         title: 'Leaf Manager',
-        category: 'Open-source contribution',
-        year: 'Community',
+        category: 'Open source',
         summary:
-            'An open-source contribution in an environmental data tool, showing comfort with shared codebases and collaborative delivery.',
-        stack: ['Open source', 'Collaboration', 'Git', 'JavaScript'],
-        challenge:
-            'Working inside an existing project required understanding patterns quickly and keeping the change set easy to review.',
-        solution:
-            'I kept the contribution focused, readable, and aligned with the existing code style and workflow.',
-        outcome:
-            'This work reinforces maintainability, teamwork, and the habit of respecting existing architecture.',
-    },
-]
-
-const skillGroups = [
-    {
-        title: 'Frontend',
-        items: ['Vue.js', 'Nuxt 3', 'TailwindCSS', 'JavaScript', 'TypeScript', 'React', 'React Native'],
-    },
-    {
-        title: 'Backend',
-        items: ['Node.js', 'NestJS', 'Express.js', 'GraphQL', 'REST', 'MongoDB', 'PostgreSQL'],
-    },
-    {
-        title: 'Engineering',
-        items: ['Git', 'CI/CD', 'Playwright', 'Testing', 'Docker', 'Linux'],
-    },
-    {
-        title: 'Strengths',
-        items: ['Problem solving', 'Mentoring', 'Algorithms', 'System design', 'Communication'],
+            'Contribution to an environmental data tool—focused changes aligned with the existing codebase and workflow.',
+        stack: ['JavaScript', 'Git', 'Collaboration'],
     },
 ]
 
@@ -169,7 +108,7 @@ const recommendation = {
     ],
 }
 
-const footerLeftText = 'Built by Hussein Hany with Vue 3, Nuxt 3, and Tailwind CSS.'
+const footerLeftText = 'Built with Vue 3, Nuxt 3, and Tailwind CSS.'
 const footerRightText = ''
 
 const theme = ref('dark')
@@ -267,40 +206,7 @@ onBeforeUnmount(() => {
     text-wrap: balance;
 }
 
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translate3d(0, 0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate3d(0, -18px, 0) scale(1.04);
-    }
-}
-
-.animate-float {
-    animation: float 14s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-    animation: float 18s ease-in-out infinite;
-    animation-delay: -4s;
-}
-
-.animate-float-slower {
-    animation: float 22s ease-in-out infinite;
-    animation-delay: -9s;
-}
-
 @media (prefers-reduced-motion: reduce) {
-
-    .animate-float,
-    .animate-float-delayed,
-    .animate-float-slower {
-        animation: none;
-    }
-
     * {
         scroll-behavior: auto !important;
     }
