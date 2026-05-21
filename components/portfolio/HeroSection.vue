@@ -52,23 +52,14 @@
                 </div>
             </div>
 
-            <div class="relative mx-auto h-36 w-36 shrink-0 overflow-hidden rounded-3xl border shadow-xl lg:mx-0 lg:h-44 lg:w-44"
-                :class="themeStyles.avatar">
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQFqPp_1DAWlPQ/profile-displayphoto-scale_200_200/B56Zs9zDzEJUAc-/0/1766268355199?e=1779321600&v=beta&t=0Yr6u67rlrihiC8Mn1t6NbWv-Gt1Ztj6D4-iWoXxPUo"
-                    :alt="profile.imageAlt" class="h-full w-full object-cover"
-                    :class="[imageLoaded ? 'opacity-100' : 'opacity-0']" @load="imageLoaded = true"
-                    @error="imageLoaded = false" />
-                <span v-if="!imageLoaded"
-                    class="absolute inset-0 flex items-center justify-center text-2xl font-black tracking-[0.3em]">
-                    HH
-                </span>
-            </div>
+            <ProfileInitials :initials="profile.initials" :label="profile.name" size="lg"
+                :theme-styles="themeStyles" class="mx-auto shadow-xl lg:mx-0" />
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import ProfileInitials from './ProfileInitials.vue'
 
 defineProps({
     themeStyles: {
@@ -102,5 +93,4 @@ defineProps({
 })
 
 const { onAnchorClick } = useSmoothScroll()
-const imageLoaded = ref(false)
 </script>

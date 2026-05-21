@@ -3,7 +3,7 @@
         class="relative min-h-screen overflow-hidden antialiased transition-colors duration-300">
         <LayoutBackdrop :overlay-class="themeStyles.backgroundOverlay" />
 
-        <div v-if="isLoading && !portfolio"
+        <div v-if="pending && !portfolio"
             class="relative mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center px-4">
             <p :class="themeStyles.textMuted" class="text-sm">Loading…</p>
         </div>
@@ -35,6 +35,7 @@
 
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { LOCALE_STORAGE_KEY, SUPPORTED_LOCALES } from '~/constants/locales'
 import ContactSection from '~/components/portfolio/ContactSection.vue'
 import HeroSection from '~/components/portfolio/HeroSection.vue'
 import LayoutBackdrop from '~/components/portfolio/LayoutBackdrop.vue'
@@ -44,11 +45,22 @@ import ProjectsSection from '~/components/portfolio/ProjectsSection.vue'
 import TestimonialsSection from '~/components/portfolio/TestimonialsSection.vue'
 
 const portfolioController = usePortfolio()
+const localeCookie = useCookie(LOCALE_STORAGE_KEY, {
+    default: () => 'en',
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: 'lax',
+})
+const { resolveRequestLocale } = useRequestLocale(localeCookie)
 
-const portfolio = computed(() => portfolioController.portfolio.value)
-const isLoading = computed(() => portfolioController.isLoading.value)
-const locale = computed(() => portfolioController.locale.value)
-const isRtl = computed(() => portfolioController.isRtl.value)
+const { data: portfolio, pending, refresh } = await useAsyncData('portfolio-content', async () => {
+    const locale = resolveRequestLocale()
+    const data = await portfolioController.load(locale)
+    portfolioController.persistLocale(locale, localeCookie)
+    return data
+})
+
+const locale = computed(() => portfolio.value?.locale ?? 'en')
+const isRtl = computed(() => locale.value === 'ar')
 
 const footerRightText = ''
 
@@ -92,20 +104,14 @@ const themeStyles = computed(() => ({
     footerBorder: isDark.value ? 'border-white/10' : 'border-slate-200',
 }))
 
-await useAsyncData('portfolio-content', async () => {
-    if (!portfolioController.portfolio.value) {
-        await portfolioController.init()
-    }
-
-    return portfolioController.portfolio.value
-})
-
 watch(
     portfolio,
     (content) => {
         if (!content) {
             return
         }
+
+        portfolioController.syncPortfolio(content)
 
         useSeoMeta({
             title: content.seo.title,
@@ -157,7 +163,10 @@ const toggleTheme = () => {
 }
 
 const toggleLocale = async () => {
-    await portfolioController.toggleLocale()
+    const currentIndex = SUPPORTED_LOCALES.indexOf(locale.value)
+    const nextLocale = SUPPORTED_LOCALES[(currentIndex + 1) % SUPPORTED_LOCALES.length]
+    localeCookie.value = nextLocale
+    await refresh()
 }
 
 const setupSectionObserver = () => {
@@ -188,13 +197,19 @@ const setupSectionObserver = () => {
     })
 }
 
-onMounted(async () => {
+onMounted(() => {
     const storedTheme = localStorage.getItem('hussein-portfolio-theme')
     const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     applyTheme(storedTheme ?? preferredTheme)
 
-    if (!portfolio.value) {
-        await portfolioController.init()
+    const legacyLocale = localStorage.getItem(LOCALE_STORAGE_KEY)
+    if (legacyLocale && legacyLocale !== portfolio.value?.locale) {
+        localeCookie.value = legacyLocale
+        refresh()
+    }
+
+    if (portfolio.value) {
+        portfolioController.syncPortfolio(portfolio.value)
     }
 
     setupSectionObserver()

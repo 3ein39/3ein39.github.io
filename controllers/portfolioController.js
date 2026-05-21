@@ -21,16 +21,21 @@ export class PortfolioController {
         )
     }
 
+    syncPortfolio(data) {
+        this.portfolio.value = data
+        this.locale.value = data?.locale ?? DEFAULT_LOCALE
+        this.applyDocumentLocale()
+    }
+
     async load(locale) {
         const nextLocale = resolveLocale(locale)
         this.isLoading.value = true
         this.error.value = null
 
         try {
-            this.portfolio.value = await this.service.fetchByLocale(nextLocale)
-            this.locale.value = nextLocale
-            this.persistLocale(nextLocale)
-            this.applyDocumentLocale()
+            const data = await this.service.fetchByLocale(nextLocale)
+            this.syncPortfolio(data)
+            return data
         } catch (loadError) {
             this.error.value = loadError
             throw loadError
@@ -39,47 +44,18 @@ export class PortfolioController {
         }
     }
 
-    async init() {
-        const storedLocale = this.readStoredLocale()
-        const browserLocale = this.detectBrowserLocale()
-        await this.load(storedLocale ?? browserLocale)
-    }
-
     async setLocale(locale) {
         if (locale === this.locale.value && this.portfolio.value) {
-            return
+            return this.portfolio.value
         }
 
-        await this.load(locale)
+        return await this.load(locale)
     }
 
     async toggleLocale() {
         const currentIndex = SUPPORTED_LOCALES.indexOf(this.locale.value)
         const nextLocale = SUPPORTED_LOCALES[(currentIndex + 1) % SUPPORTED_LOCALES.length]
-        await this.setLocale(nextLocale)
-    }
-
-    detectBrowserLocale() {
-        if (typeof navigator === 'undefined') {
-            return DEFAULT_LOCALE
-        }
-
-        return navigator.language?.toLowerCase().startsWith('ar') ? 'ar' : DEFAULT_LOCALE
-    }
-
-    readStoredLocale() {
-        if (typeof localStorage === 'undefined') {
-            return null
-        }
-
-        const stored = localStorage.getItem(LOCALE_STORAGE_KEY)
-        return stored ? resolveLocale(stored) : null
-    }
-
-    persistLocale(locale) {
-        if (typeof localStorage !== 'undefined') {
-            localStorage.setItem(LOCALE_STORAGE_KEY, locale)
-        }
+        return await this.setLocale(nextLocale)
     }
 
     applyDocumentLocale() {
@@ -90,5 +66,16 @@ export class PortfolioController {
         const { locale, dir } = this.portfolio.value
         document.documentElement.lang = locale
         document.documentElement.dir = dir
+    }
+
+    persistLocale(locale, localeCookie) {
+        if (localeCookie) {
+            localeCookie.value = locale
+            return
+        }
+
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(LOCALE_STORAGE_KEY, locale)
+        }
     }
 }
