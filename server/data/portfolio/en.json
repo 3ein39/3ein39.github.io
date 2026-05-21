@@ -44,7 +44,10 @@
     "work": {
       "eyebrow": "Work",
       "title": "Selected projects.",
-      "githubLink": "More projects on GitHub →"
+      "githubLink": "More projects on GitHub →",
+      "githubProjectsUrl": "https://github.com/3ein39?tab=repositories",
+      "clickHint": "Click for more info",
+      "viewOnGithub": "View on GitHub"
     },
     "recommendations": {
       "eyebrow": "Recommendations",
@@ -74,19 +77,22 @@
       "title": "ServiceSphere",
       "category": "Mobile marketplace",
       "summary": "AI-assisted services marketplace with real-time chat and bilingual UX, built around trust and fast discovery.",
-      "stack": ["React Native", "AI", "Real-time chat"]
+      "stack": ["React Native", "AI", "Real-time chat"],
+      "githubUrl": "https://github.com/Service-Sphere-GP/react-native"
     },
     {
       "title": "YelpCamp",
       "category": "Full-stack web app",
       "summary": "Campground review app with auth, CRUD flows, and map-based discovery using Node, Express, and MongoDB.",
-      "stack": ["Node.js", "Express", "MongoDB", "Mapbox"]
+      "stack": ["Node.js", "Express", "MongoDB", "Mapbox"],
+      "githubUrl": "https://github.com/3ein39/YelpCamp"
     },
     {
-      "title": "Leaf Manager",
-      "category": "Open source",
-      "summary": "Contribution to an environmental data tool—focused changes aligned with the existing codebase and workflow.",
-      "stack": ["JavaScript", "Git", "Collaboration"]
+      "title": "BookEra",
+      "category": "Web application",
+      "summary": "Book browsing and discovery app focused on clear catalog flows and a calm reading-oriented interface.",
+      "stack": ["JavaScript", "Web", "Git"],
+      "githubUrl": "https://github.com/3ein39/BookEra"
     }
   ],
   "recommendation": {

@@ -18,8 +18,8 @@
                 :linkedin-url="portfolio.links.linkedin" :profile="portfolio.profile" :skills="portfolio.skills"
                 :theme-styles="themeStyles" :ui="portfolio.ui" />
 
-            <ProjectsSection :github-url="portfolio.links.github" :projects="portfolio.projects"
-                :section="portfolio.sections.work" :theme-styles="themeStyles" />
+            <ProjectsSection :projects="portfolio.projects" :section="portfolio.sections.work"
+                :theme-styles="themeStyles" />
 
             <TestimonialsSection :recommendation="portfolio.recommendation"
                 :section="portfolio.sections.recommendations" :theme-styles="themeStyles" />
