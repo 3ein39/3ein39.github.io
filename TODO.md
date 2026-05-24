@@ -4,3 +4,4 @@
 - Collect the work history content for that section.
 - Make site responsive for mobile devices.
 - Polish LinkedIn and GitHub buttons.
+- Use typescript
