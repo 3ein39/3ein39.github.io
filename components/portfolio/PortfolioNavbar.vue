@@ -11,7 +11,7 @@
                         class="block text-sm font-semibold tracking-[0.24em] uppercase">{{ portfolio.profile.name
                         }}</span>
                     <span :class="themeStyles.textMuted" class="block text-sm">{{ portfolio.profile.navSubtitle
-                    }}</span>
+                        }}</span>
                 </span>
             </a>
 
@@ -27,8 +27,8 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <LanguageToggle :aria-label="portfolio.ui.switchLanguage" :locale="locale" :theme-styles="themeStyles"
-                    @toggle="$emit('toggle-locale')" />
+                <LanguageToggle :aria-label="portfolio.ui.switchLanguage" :disabled="true" :locale="locale"
+                    :theme-styles="themeStyles" @toggle="$emit('toggle-locale')" />
 
                 <a :href="resumeUrl" target="_blank" rel="noreferrer"
                     :class="[themeStyles.secondaryButton, 'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']">
