@@ -5,13 +5,13 @@
             <a href="#top"
                 :class="[isRtl ? 'text-right' : 'text-left', 'group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']"
                 @click="onAnchorClick($event, '#top')">
-                <ProfileInitials :initials="portfolio.profile.initials" :label="portfolio.profile.name"
-                    :theme-styles="themeStyles" />
 
                 <span>
                     <span :class="themeStyles.accentText"
-                        class="block text-sm font-semibold tracking-[0.24em] uppercase">{{ portfolio.profile.name }}</span>
-                    <span :class="themeStyles.textMuted" class="block text-sm">{{ portfolio.profile.navSubtitle }}</span>
+                        class="block text-sm font-semibold tracking-[0.24em] uppercase">{{ portfolio.profile.name
+                        }}</span>
+                    <span :class="themeStyles.textMuted" class="block text-sm">{{ portfolio.profile.navSubtitle
+                    }}</span>
                 </span>
             </a>
 
@@ -44,7 +44,6 @@
 
 <script setup>
 import LanguageToggle from './LanguageToggle.vue'
-import ProfileInitials from './ProfileInitials.vue'
 import ThemeToggle from './ThemeToggle.vue'
 
 const props = defineProps({
