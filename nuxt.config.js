@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@vueuse/motion/nuxt'],
   app: {
-    baseURL: '/3ein39/',
+    baseURL: '/',
   },
   ssr: true,
   nitro: {
