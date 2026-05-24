@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <ProfileInitials :initials="profile.initials" :label="profile.name" size="lg"
+            <ProfileInitials :image-url="profile.photoUrl" :initials="profile.initials" :label="profile.name" size="lg"
                 :theme-styles="themeStyles" class="mx-auto shadow-xl lg:mx-0" />
         </div>
     </section>

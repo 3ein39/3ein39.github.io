@@ -1,7 +1,9 @@
 <template>
-    <div :class="[markClass, sizeClass, 'flex shrink-0 items-center justify-center rounded-2xl border font-black tracking-[0.25em]']"
+    <div :class="[markClass, sizeClass, 'flex shrink-0 items-center justify-center overflow-hidden rounded-2xl border font-black tracking-[0.25em]']"
         :aria-label="label">
-        {{ displayInitials }}
+        <img v-if="imageUrl" :alt="label || displayInitials" :src="imageUrl" class="h-full w-full object-cover"
+            loading="eager">
+        <span v-else>{{ displayInitials }}</span>
     </div>
 </template>
 
@@ -12,6 +14,10 @@ const props = defineProps({
     initials: {
         type: String,
         required: true,
+    },
+    imageUrl: {
+        type: String,
+        default: '',
     },
     themeStyles: {
         type: Object,

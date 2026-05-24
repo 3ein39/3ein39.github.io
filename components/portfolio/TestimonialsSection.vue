@@ -8,10 +8,11 @@
                 <article :class="[themeStyles.card, 'overflow-hidden rounded-[1.75rem] border']">
                     <div
                         class="flex flex-col gap-6 border-b border-white/10 p-6 sm:flex-row sm:items-center sm:justify-between">
-                    <div class="flex items-center gap-4">
-                        <ProfileInitials :initials="recommendation.initials" :label="recommendation.author"
-                            size="sm" :theme-styles="themeStyles" />
-                        <div>
+                        <div class="flex items-center gap-4">
+                            <ProfileInitials v-if="recommendation.photoUrl || recommendation.initials" :image-url="recommendation.photoUrl"
+                                :initials="recommendation.initials" :label="recommendation.author" size="sm"
+                                :theme-styles="themeStyles" />
+                            <div>
                                 <p :class="themeStyles.accentText"
                                     class="text-sm font-semibold uppercase tracking-[0.24em]">
                                     {{ section.linkedinLabel }}

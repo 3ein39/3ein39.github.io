@@ -10,7 +10,8 @@
   "profile": {
     "name": "Hussein Hany",
     "navSubtitle": "Frontend Developer · Vue/Nuxt · MEVN",
-    "initials": "HH"
+    "initials": "HH",
+    "photoUrl": "https://res.cloudinary.com/ein39/image/upload/v1779631404/Personall/formal_kflp7m.png"
   },
   "links": {
     "email": "hussein.hany.cs@gmail.com",
@@ -21,7 +22,7 @@
   "hero": {
     "availability": "Open to frontend work",
     "role": "Frontend developer · Vue & Nuxt",
-    "bio": "I build fast, accessible web apps and turn complex requirements into calm interfaces. CS graduate (Fayoum University, 2025), ICPC finalist, and mentor to 100+ students in algorithms.",
+    "bio": "I build fast, accessible web apps and turn complex requirements into calm interfaces. CS graduate (Fayoum University, 2025), ECPC finalist, and mentor to 100+ students in algorithms.",
     "ctaWork": "View work",
     "ctaContact": "Get in touch"
   },
@@ -33,7 +34,7 @@
     "Node.js",
     "NestJS",
     "MongoDB",
-    "PostgreSQL"
+    "MySQL"
   ],
   "nav": [
     { "label": "Work", "href": "#projects", "sectionId": "projects" },
@@ -100,7 +101,6 @@
     "role": "Frontend Developer at Wisemen",
     "company": "Wisemen",
     "date": "February 12, 2026",
-    "initials": "NB",
     "paragraphs": [
       "I had the pleasure of working with Hussein and can confidently say he was a great addition to the team. He adapted quickly to the way we work and consistently impressed us with his responsiveness and commitment.",
       "Hussein communicates clearly and openly, he isn't afraid to share his needs or provide constructive feedback, which made collaboration smooth and effective. He's proactive, reliable, and never hesitates to roll up his sleeves and get his hands dirty when needed.",
