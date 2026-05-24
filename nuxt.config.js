@@ -7,7 +7,9 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/3ein39/',
   },
+  ssr: true,
   nitro: {
+    preset: 'static',
     compatibilityDate: '2026-04-30',
     prerender: {
       routes: ['/api/portfolio/en', '/api/portfolio/ar'],
