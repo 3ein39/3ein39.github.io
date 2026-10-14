@@ -2,14 +2,14 @@
   "locale": "en",
   "dir": "ltr",
   "seo": {
-    "title": "Hussein Hany | Frontend Developer",
-    "description": "Hussein Hany is a Vue and Nuxt frontend developer who builds fast, accessible web apps.",
-    "ogTitle": "Hussein Hany | Frontend Developer",
-    "ogDescription": "Vue.js and Nuxt developer with full-stack experience, strong problem-solving skills, and mentoring experience."
+    "title": "Hussein Hany | Full-stack Developer",
+    "description": "Hussein Hany is a full-stack developer who builds end-to-end web applications with Vue, Nuxt, and NestJS.",
+    "ogTitle": "Hussein Hany | Full-stack Developer",
+    "ogDescription": "Full-stack developer building end-to-end web applications with Vue, Nuxt, NestJS, and Node.js."
   },
   "profile": {
     "name": "Hussein Hany",
-    "navSubtitle": "Frontend Developer · Vue/Nuxt · MEVN",
+    "navSubtitle": "Full-stack Developer · NestJS/Vue · MEVN",
     "initials": "HH",
     "photoUrl": "https://res.cloudinary.com/ein39/image/upload/v1779631404/Personall/formal_kflp7m.png"
   },
@@ -20,9 +20,9 @@
     "resume": "https://drive.google.com/file/d/16pwMcAf-qPjMAhWDyhZQQBl7v9Ycgtic/view?usp=drive_link"
   },
   "hero": {
-    "availability": "Open to frontend work",
-    "role": "Frontend developer · Vue & Nuxt",
-    "bio": "I build fast, accessible web apps and turn complex requirements into calm interfaces. CS graduate (Fayoum University, 2025), ECPC finalist, and mentor to 100+ students in algorithms.",
+    "availability": "Open to full-stack work",
+    "role": "Full-stack developer · NestJS & Vue",
+    "bio": "I build end-to-end web applications with Vue, Nuxt, NestJS, and Node.js, turning complex requirements into reliable products. CS graduate (Fayoum University, 2025), ECPC finalist, and mentor to 100+ students in algorithms.",
     "ctaWork": "View work",
     "ctaContact": "Get in touch"
   },
@@ -34,7 +34,8 @@
     "Node.js",
     "NestJS",
     "MongoDB",
-    "MySQL"
+    "MySQL",
+    "REST APIs"
   ],
   "nav": [
     { "label": "Work", "href": "#projects", "sectionId": "projects" },

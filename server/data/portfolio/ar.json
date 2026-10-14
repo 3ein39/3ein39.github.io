@@ -2,14 +2,14 @@
   "locale": "ar",
   "dir": "rtl",
   "seo": {
-    "title": "حسين هاني | مطور واجهات أمامية",
-    "description": "حسين هاني مطور واجهات أمامية يعمل بـ Vue و Nuxt ويبني تطبيقات ويب سريعة وسهلة الوصول.",
-    "ogTitle": "حسين هاني | مطور واجهات أمامية",
-    "ogDescription": "مطور Vue.js و Nuxt بخبرة full-stack، مهارات قوية في حل المشكلات، وخبرة في الإرشاد."
+    "title": "حسين هاني | مطور Full-stack",
+    "description": "حسين هاني مطور Full-stack يبني تطبيقات ويب متكاملة باستخدام Vue وNuxt وNestJS.",
+    "ogTitle": "حسين هاني | مطور Full-stack",
+    "ogDescription": "مطور Full-stack يبني تطبيقات ويب متكاملة باستخدام Vue وNuxt وNestJS وNode.js."
   },
   "profile": {
     "name": "حسين هاني",
-    "navSubtitle": "مطور واجهات أمامية · Vue/Nuxt · MEVN",
+    "navSubtitle": "مطور Full-stack · NestJS/Vue · MEVN",
     "initials": "HH",
     "photoUrl": "https://res.cloudinary.com/ein39/image/upload/v1779631404/Personall/formal_kflp7m.png"
   },
@@ -20,9 +20,9 @@
     "resume": "https://drive.google.com/file/d/16pwMcAf-qPjMAhWDyhZQQBl7v9Ycgtic/view?usp=drive_link"
   },
   "hero": {
-    "availability": "متاح لمشاريع الواجهات الأمامية",
-    "role": "مطور واجهات أمامية · Vue و Nuxt",
-    "bio": "أبني تطبيقات ويب سريعة وسهلة الوصول، وأحوّل المتطلبات المعقدة إلى واجهات هادئة. خريج علوم حاسب (جامعة الفيوم 2025)، متأهل ECPC ومرشد لأكثر من 100 طالب في الخوارزميات.",
+    "availability": "متاح لمشاريع Full-stack",
+    "role": "مطور Full-stack · NestJS و Vue",
+    "bio": "أبني تطبيقات ويب متكاملة باستخدام Vue وNuxt وNestJS وNode.js، وأحوّل المتطلبات المعقدة إلى منتجات موثوقة. خريج علوم حاسب (جامعة الفيوم 2025)، متأهل ECPC ومرشد لأكثر من 100 طالب في الخوارزميات.",
     "ctaWork": "عرض الأعمال",
     "ctaContact": "تواصل معي"
   },
@@ -34,7 +34,8 @@
     "Node.js",
     "NestJS",
     "MongoDB",
-    "MySQL"
+    "MySQL",
+    "REST APIs"
   ],
   "nav": [
     { "label": "الأعمال", "href": "#projects", "sectionId": "projects" },
