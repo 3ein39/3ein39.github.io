@@ -1,26 +1,26 @@
 <template>
-    <header class="fixed inset-x-0 top-4 z-50 px-4 sm:px-6 lg:px-8">
+    <header class="fixed inset-x-0 top-0 z-50 px-4 sm:px-6 lg:px-10">
         <div
-            :class="[themeStyles.panel, 'mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 rounded-3xl border px-4 py-4 shadow-2xl backdrop-blur-xl sm:px-6']">
+            :class="[themeStyles.panel, 'mx-auto flex max-w-7xl items-center justify-between gap-4 border-x border-b px-4 py-3 shadow-lg sm:px-6']">
             <a href="#top"
-                :class="[isRtl ? 'text-right' : 'text-left', 'group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']"
+                :class="[isRtl ? 'text-right' : 'text-left', 'group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2']"
                 @click="onAnchorClick($event, '#top')">
 
                 <span>
                     <span :class="themeStyles.accentText"
-                        class="block text-sm font-semibold tracking-[0.24em] uppercase">{{ portfolio.profile.name
+                        class="block text-sm font-black tracking-[0.2em] uppercase">{{ portfolio.profile.name
                         }}</span>
                     <span :class="themeStyles.textMuted" class="block text-sm">{{ portfolio.profile.navSubtitle
                         }}</span>
                 </span>
             </a>
 
-            <nav class="flex flex-1 flex-wrap items-center justify-center gap-2 text-sm sm:gap-3 md:justify-end">
+            <nav class="hidden flex-1 items-center justify-end gap-1 text-sm md:flex">
                 <a v-for="item in navItems" :key="item.sectionId" :href="item.href" :class="[
                     isActive(item.sectionId)
                         ? themeStyles.navLinkActive
                         : themeStyles.navLink,
-                    'rounded-full px-4 py-2 font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+                    'px-3 py-2 font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2',
                 ]" @click="onAnchorClick($event, item.href)">
                     {{ item.label }}
                 </a>
@@ -31,7 +31,7 @@
                     :theme-styles="themeStyles" @toggle="$emit('toggle-locale')" />
 
                 <a :href="resumeUrl" target="_blank" rel="noreferrer"
-                    :class="[themeStyles.secondaryButton, 'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']">
+                    :class="[themeStyles.secondaryButton, 'inline-flex items-center gap-2 border px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2']">
                     <span class="hidden sm:inline">{{ portfolio.ui.downloadCv }}</span>
                     <span class="sm:hidden">{{ portfolio.ui.cvShort }}</span>
                 </a>

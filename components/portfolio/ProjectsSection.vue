@@ -4,22 +4,22 @@
             <SectionHeading :description="section.description" :eyebrow="section.eyebrow" :title="section.title"
                 :theme-styles="themeStyles" />
 
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div class="grid gap-0 border-l border-t border-[#176b4d]/30 md:grid-cols-2 lg:grid-cols-3">
                 <a v-for="project in projects" :key="project.title" :href="project.githubUrl" target="_blank"
                     rel="noreferrer" :aria-label="`${project.title} — ${section.clickHint}`"
                     :class="[themeStyles.panel, cardClass]">
                     <p :class="themeStyles.accentText"
-                        class="text-sm font-semibold uppercase tracking-[0.2em] text-pretty">
+                        class="text-xs font-bold uppercase tracking-[0.2em] text-pretty">
                         {{ project.category }}
                     </p>
-                    <h3 class="mt-2 text-2xl font-bold transition-colors duration-300 group-hover:text-cyan-300">
+                    <h3 class="mt-3 text-2xl font-black transition-colors duration-300 group-hover:text-[#176b4d]">
                         {{ project.title }}
                     </h3>
                     <p :class="themeStyles.textMuted" class="mt-4 flex-1 text-base leading-7">{{ project.summary }}</p>
 
                     <ul class="mt-5 flex flex-wrap gap-2">
                         <li v-for="item in project.stack" :key="item"
-                            :class="[themeStyles.chip, 'rounded-full border px-3 py-1 text-xs font-medium']">
+                            :class="[themeStyles.chip, 'border px-2 py-1 text-xs font-medium']">
                             {{ item }}
                         </li>
                     </ul>
@@ -39,7 +39,7 @@
 
             <p class="mt-8">
                 <a :href="section.githubProjectsUrl" target="_blank" rel="noreferrer"
-                    :class="[themeStyles.accentText, 'text-sm font-semibold underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400']">
+                    :class="[themeStyles.accentText, 'text-sm font-semibold underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d]']">
                     {{ section.githubLink }}
                 </a>
             </p>
@@ -67,15 +67,15 @@ defineProps({
 })
 
 const cardClass = [
-    'group relative flex h-full flex-col overflow-hidden rounded-[2rem] border p-6 shadow-2xl backdrop-blur-xl',
+    'group relative flex h-full flex-col overflow-hidden border-b border-r border-[#176b4d]/30 p-6',
     'cursor-pointer transition-all duration-300 ease-out',
-    'hover:-translate-y-1.5 hover:border-cyan-400/40 hover:shadow-[0_20px_50px_-12px_rgba(34,211,238,0.25)]',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+    'hover:-translate-y-1 hover:bg-[#176b4d]/10',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2',
     'active:translate-y-0 active:scale-[0.99]',
 ]
 
 const actionBarClass = [
-    'mt-6 flex items-center justify-between gap-3 rounded-2xl border px-4 py-3',
+    'mt-6 flex items-center justify-between gap-3 border-t border-[#176b4d]/25 pt-4',
     'translate-y-3 opacity-0 transition-all duration-300 ease-out',
     'group-hover:translate-y-0 group-hover:opacity-100',
     'group-focus-visible:translate-y-0 group-focus-visible:opacity-100',

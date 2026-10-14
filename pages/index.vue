@@ -1,15 +1,15 @@
 <template>
     <main :class="themeStyles.page"
-        class="relative min-h-screen overflow-hidden antialiased transition-colors duration-300">
+        class="relative min-h-[100dvh] overflow-hidden antialiased transition-colors duration-300">
         <LayoutBackdrop :overlay-class="themeStyles.backgroundOverlay" />
 
         <div v-if="pending && !portfolio"
-            class="relative mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center px-4">
+            class="relative mx-auto flex min-h-[100dvh] w-full max-w-7xl items-center justify-center px-4">
             <p :class="themeStyles.textMuted" class="text-sm">Loading…</p>
         </div>
 
         <div v-else-if="portfolio"
-            class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+            class="relative mx-auto flex min-h-[100dvh] w-full max-w-7xl flex-col px-4 pb-16 pt-24 sm:px-6 lg:px-10">
             <PortfolioNavbar :active-section="activeSection" :is-dark="isDark" :is-rtl="isRtl" :locale="locale"
                 :nav-items="portfolio.nav" :portfolio="portfolio" :resume-url="portfolio.links.resume"
                 :theme-styles="themeStyles" @toggle-locale="toggleLocale" @toggle-theme="toggleTheme" />
@@ -70,38 +70,36 @@ let sectionObserver
 
 const isDark = computed(() => theme.value === 'dark')
 const themeStyles = computed(() => ({
-    page: isDark.value ? 'bg-[#06111f] text-slate-100' : 'bg-[#f5f0e6] text-slate-950',
-    panel: isDark.value ? 'border-white/10 bg-white/5' : 'border-slate-200/90 bg-white/90',
-    panelSoft: isDark.value ? 'border-white/10 bg-white/5' : 'border-slate-200/80 bg-white/85',
-    card: isDark.value ? 'border-white/10 bg-slate-950/45' : 'border-slate-200 bg-white',
-    textMuted: isDark.value ? 'text-slate-300' : 'text-slate-700',
-    accentText: isDark.value ? 'text-cyan-300' : 'text-sky-800',
-    accentBg: isDark.value ? 'bg-cyan-300' : 'bg-sky-700',
-    accentBorder: isDark.value ? 'border-cyan-400/30' : 'border-sky-700/20',
-    brandMark: isDark.value ? 'bg-white/10 text-cyan-200' : 'bg-slate-950 text-white',
+    page: isDark.value ? 'bg-[#10211b] text-[#f3f0e7]' : 'bg-[#f3f0e7] text-[#14221d]',
+    panel: isDark.value ? 'border-[#9bc9ae]/30 bg-[#17372b]' : 'border-[#14221d]/20 bg-[#e7e2d6]',
+    panelSoft: isDark.value ? 'border-[#9bc9ae]/25 bg-[#17372b]' : 'border-[#14221d]/10 bg-[#ebe7dc]',
+    card: isDark.value ? 'border-[#9bc9ae]/25 bg-[#0d1915]' : 'border-[#14221d]/15 bg-[#f8f5ec]',
+    textMuted: isDark.value ? 'text-[#c3d8c8]' : 'text-[#4a5b50]',
+    accentText: isDark.value ? 'text-[#9bc9ae]' : 'text-[#176b4d]',
+    accentBg: isDark.value ? 'bg-[#9bc9ae]' : 'bg-[#176b4d]',
+    accentBorder: isDark.value ? 'border-[#9bc9ae]/50' : 'border-[#176b4d]/35',
+    brandMark: isDark.value ? 'bg-[#9bc9ae] text-[#10211b]' : 'bg-[#176b4d] text-[#f3f0e7]',
     navLink: isDark.value
-        ? 'text-slate-300 hover:bg-white/10 hover:text-white'
-        : 'text-slate-700 hover:bg-slate-950 hover:text-white',
-    navLinkActive: isDark.value ? 'bg-white/15 text-white' : 'bg-slate-950 text-white',
+        ? 'text-[#c3d8c8] hover:bg-[#9bc9ae]/15 hover:text-[#f3f0e7]'
+        : 'text-[#4a5b50] hover:bg-[#176b4d] hover:text-[#f3f0e7]',
+    navLinkActive: isDark.value ? 'bg-[#9bc9ae] text-[#10211b]' : 'bg-[#14221d] text-[#f3f0e7]',
     primaryButton: isDark.value
-        ? 'bg-cyan-400 text-slate-950 hover:bg-cyan-300'
-        : 'bg-slate-950 text-white hover:bg-slate-800',
+        ? 'bg-[#9bc9ae] text-[#10211b] hover:bg-[#b5ddc2]'
+        : 'bg-[#176b4d] text-[#f3f0e7] hover:bg-[#0f563c]',
     secondaryButton: isDark.value
-        ? 'bg-white/5 text-slate-100 hover:bg-white/10'
-        : 'bg-white text-slate-950 hover:bg-slate-100',
-    chip: isDark.value ? 'border-white/10 bg-white/5 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800',
+        ? 'bg-[#17372b] text-[#f3f0e7] hover:bg-[#1d4838]'
+        : 'bg-[#f8f5ec] text-[#14221d] hover:bg-[#e7e2d6]',
+    chip: isDark.value ? 'border-[#9bc9ae]/30 bg-[#17372b] text-[#c3d8c8]' : 'border-[#14221d]/15 bg-[#e7e2d6] text-[#30463a]',
     input: isDark.value
-        ? 'border-white/10 bg-slate-950/45 text-slate-100 placeholder:text-slate-500'
-        : 'border-slate-200 bg-white text-slate-950 placeholder:text-slate-400',
-    pill: isDark.value ? 'border-white/10 bg-white/5 text-slate-200' : 'border-slate-200 bg-white text-slate-800',
-    avatar: isDark.value ? 'bg-gradient-to-br from-cyan-400 to-sky-600 text-slate-950' : 'bg-gradient-to-br from-slate-950 to-slate-700 text-white',
+        ? 'border-[#9bc9ae]/30 bg-[#0d1915] text-[#f3f0e7] placeholder:text-[#8daa98]'
+        : 'border-[#14221d]/20 bg-[#f8f5ec] text-[#14221d] placeholder:text-[#6a7a70]',
+    pill: isDark.value ? 'border-[#9bc9ae]/30 bg-[#17372b] text-[#c3d8c8]' : 'border-[#14221d]/15 bg-[#f8f5ec] text-[#30463a]',
+    avatar: isDark.value ? 'bg-[#9bc9ae] text-[#10211b]' : 'bg-[#176b4d] text-[#f3f0e7]',
     backgroundOverlay: isDark.value
-        ? 'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.07),_transparent_35%),linear-gradient(to_bottom,_transparent,_rgba(2,6,23,0.14))]'
-        : 'bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.72),_transparent_32%),linear-gradient(to_bottom,_transparent,_rgba(15,23,42,0.08))]',
-    heroGlow: isDark.value
-        ? 'bg-[radial-gradient(circle_at_top_right,_rgba(34,211,238,0.16),_transparent_42%)]'
-        : 'bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.12),_transparent_42%)]',
-    footerBorder: isDark.value ? 'border-white/10' : 'border-slate-200',
+        ? 'bg-[linear-gradient(135deg,rgba(155,201,174,0.07)_1px,transparent_1px),linear-gradient(rgba(155,201,174,0.05)_1px,transparent_1px)] bg-[size:48px_48px]'
+        : 'bg-[linear-gradient(135deg,rgba(20,34,29,0.05)_1px,transparent_1px),linear-gradient(rgba(20,34,29,0.04)_1px,transparent_1px)] bg-[size:48px_48px]',
+    heroGlow: isDark.value ? 'bg-[#176b4d]/20' : 'bg-[#176b4d]/10',
+    footerBorder: isDark.value ? 'border-[#9bc9ae]/30' : 'border-[#14221d]/20',
 }))
 
 watch(

@@ -1,9 +1,7 @@
 <template>
-    <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div class="mb-8 flex flex-col gap-3">
         <div>
-            <p :class="themeStyles.accentText" class="text-sm font-semibold uppercase tracking-[0.32em]">{{ eyebrow }}
-            </p>
-            <h2 class="mt-3 text-3xl font-black sm:text-4xl">{{ title }}</h2>
+            <h2 class="mt-3 max-w-2xl text-4xl font-black tracking-tight sm:text-5xl">{{ title }}</h2>
         </div>
         <p v-if="description" :class="themeStyles.textMuted" class="max-w-2xl text-sm leading-7 sm:text-base">
             {{ description }}
