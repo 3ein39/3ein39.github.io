@@ -1,59 +1,62 @@
 <template>
-    <section id="top" data-section="top" class="py-6 lg:py-12">
+    <section id="top" data-section="top" class="border-b border-[#176b4d]/30 py-8 lg:py-14">
         <div
             v-motion
             :initial="{ opacity: 0, y: 20 }"
             :enter="{ opacity: 1, y: 0, transition: { duration: 600, ease: 'easeOut' } }"
-            class="grid items-start gap-10 lg:grid-cols-[1fr_auto] lg:gap-14">
-            <div class="max-w-3xl">
+            class="grid items-stretch gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+            <div class="flex max-w-3xl flex-col justify-between">
                 <p
-                    :class="[themeStyles.accentBorder, 'mb-5 inline-flex items-center gap-2 rounded-full border bg-cyan-400/10 px-4 py-2 text-sm font-medium']">
-                    <span :class="themeStyles.accentBg" class="h-2 w-2 rounded-full" />
+                    :class="[themeStyles.accentText, 'mb-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em]']">
+                    <span :class="themeStyles.accentBg" class="h-2 w-8" />
                     {{ hero.availability }}
                 </p>
 
-                <h1 class="text-4xl font-black tracking-tight text-balance sm:text-5xl lg:text-6xl">
+                <h1 class="max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.05em] text-balance sm:text-6xl lg:text-8xl">
                     {{ profile.name }}
                 </h1>
-                <p :class="themeStyles.accentText" class="mt-3 text-xl font-semibold sm:text-2xl">
+                <p :class="themeStyles.accentText" class="mt-5 text-xl font-bold sm:text-2xl">
                     {{ hero.role }}
                 </p>
 
-                <p :class="themeStyles.textMuted" class="mt-6 max-w-2xl text-lg leading-8">
+                <p :class="themeStyles.textMuted" class="mt-6 max-w-xl text-base leading-8 sm:text-lg">
                     {{ hero.bio }}
                 </p>
 
-                <ul class="mt-6 flex flex-wrap gap-2">
+                <ul class="mt-8 flex max-w-2xl flex-wrap gap-x-5 gap-y-2 border-y border-[#176b4d]/25 py-4">
                     <li v-for="skill in skills" :key="skill"
-                        :class="[themeStyles.chip, 'rounded-full border px-3 py-1 text-xs font-medium']">
+                        :class="[themeStyles.accentText, 'text-xs font-bold uppercase tracking-[0.12em]']">
                         {{ skill }}
                     </li>
                 </ul>
 
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="#projects"
-                        :class="[themeStyles.primaryButton, 'inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold shadow-lg shadow-cyan-500/20 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']"
+                        :class="[themeStyles.primaryButton, 'inline-flex items-center justify-center border px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2']"
                         @click="onAnchorClick($event, '#projects')">
                         {{ hero.ctaWork }}
                     </a>
                     <a href="#contact"
-                        :class="[themeStyles.secondaryButton, 'inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']"
+                        :class="[themeStyles.secondaryButton, 'inline-flex items-center justify-center border px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2']"
                         @click="onAnchorClick($event, '#contact')">
                         {{ hero.ctaContact }}
                     </a>
                     <a :href="linkedinUrl" target="_blank" rel="noreferrer"
-                        :class="[themeStyles.secondaryButton, 'inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']">
+                        :class="[themeStyles.secondaryButton, 'inline-flex items-center justify-center border px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2']">
                         {{ ui.linkedin }}
                     </a>
                     <a :href="githubUrl" target="_blank" rel="noreferrer"
-                        :class="[themeStyles.secondaryButton, 'inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent']">
+                        :class="[themeStyles.secondaryButton, 'inline-flex items-center justify-center border px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#176b4d] focus-visible:ring-offset-2']">
                         {{ ui.github }}
                     </a>
                 </div>
             </div>
 
-            <ProfileInitials :image-url="profile.photoUrl" :initials="profile.initials" :label="profile.name" size="lg"
-                :theme-styles="themeStyles" class="mx-auto shadow-xl lg:mx-0" />
+            <div class="relative flex min-h-64 items-end justify-end border-l border-[#176b4d]/30 pl-6 lg:min-h-full">
+                <div :class="themeStyles.accentBg" class="absolute left-0 top-0 h-24 w-24 -translate-x-1/2 -translate-y-1/2" />
+                <ProfileInitials :image-url="profile.photoUrl" :initials="profile.initials" :label="profile.name" size="lg"
+                    :theme-styles="themeStyles" class="relative shadow-[12px_12px_0_#176b4d]" />
+            </div>
         </div>
     </section>
 </template>

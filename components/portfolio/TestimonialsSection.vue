@@ -4,17 +4,17 @@
             :theme-styles="themeStyles" />
 
         <SectionReveal>
-            <div :class="[themeStyles.panel, 'rounded-[2rem] border p-6 shadow-2xl backdrop-blur-xl lg:p-8']">
-                <article :class="[themeStyles.card, 'overflow-hidden rounded-[1.75rem] border']">
+            <div :class="[themeStyles.panel, 'border p-6 lg:p-8']">
+                <article :class="[themeStyles.card, 'overflow-hidden border']">
                     <div
-                        class="flex flex-col gap-6 border-b border-white/10 p-6 sm:flex-row sm:items-center sm:justify-between">
+                        class="flex flex-col gap-6 border-b border-[#176b4d]/25 p-6 sm:flex-row sm:items-center sm:justify-between">
                         <div class="flex items-center gap-4">
                             <ProfileInitials v-if="recommendation.photoUrl || recommendation.initials" :image-url="recommendation.photoUrl"
                                 :initials="recommendation.initials" :label="recommendation.author" size="sm"
                                 :theme-styles="themeStyles" />
                             <div>
                                 <p :class="themeStyles.accentText"
-                                    class="text-sm font-semibold uppercase tracking-[0.24em]">
+                                    class="text-xs font-bold uppercase tracking-[0.24em]">
                                     {{ section.linkedinLabel }}
                                 </p>
                                 <h3 class="mt-2 text-xl font-bold">{{ recommendation.author }}</h3>
