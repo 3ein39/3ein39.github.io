@@ -27,7 +27,8 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <LanguageToggle :aria-label="portfolio.ui.switchLanguage" :disabled="true" :locale="locale"
+                <LanguageToggle :aria-label="portfolio.ui.switchLanguage" :disabled="isLocaleSwitching"
+                    :locale="locale"
                     :theme-styles="themeStyles" @toggle="$emit('toggle-locale')" />
 
                 <a :href="resumeUrl" target="_blank" rel="noreferrer"
@@ -76,6 +77,10 @@ const props = defineProps({
         required: true,
     },
     isRtl: {
+        type: Boolean,
+        default: false,
+    },
+    isLocaleSwitching: {
         type: Boolean,
         default: false,
     },
