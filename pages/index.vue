@@ -12,7 +12,8 @@
             class="relative mx-auto flex min-h-[100dvh] w-full max-w-7xl flex-col px-4 pb-16 pt-24 sm:px-6 lg:px-10">
             <PortfolioNavbar :active-section="activeSection" :is-dark="isDark" :is-rtl="isRtl" :locale="locale"
                 :nav-items="portfolio.nav" :portfolio="portfolio" :resume-url="portfolio.links.resume"
-                :theme-styles="themeStyles" @toggle-locale="toggleLocale" @toggle-theme="toggleTheme" />
+                :theme-styles="themeStyles" :is-locale-switching="isLocaleSwitching"
+                @toggle-locale="toggleLocale" @toggle-theme="toggleTheme" />
 
             <HeroSection :github-url="portfolio.links.github" :hero="portfolio.hero"
                 :linkedin-url="portfolio.links.linkedin" :profile="portfolio.profile" :skills="portfolio.skills"
@@ -52,7 +53,7 @@ const localeCookie = useCookie(LOCALE_STORAGE_KEY, {
 })
 const { resolveRequestLocale } = useRequestLocale(localeCookie)
 
-const { data: portfolio, pending, refresh } = await useAsyncData('portfolio-content', async () => {
+const { data: portfolio, pending } = await useAsyncData('portfolio-content', async () => {
     const locale = resolveRequestLocale()
     const data = await portfolioController.load(locale)
     portfolioController.persistLocale(locale, localeCookie)
@@ -65,6 +66,7 @@ const isRtl = computed(() => locale.value === 'ar')
 const footerRightText = ''
 
 const theme = ref('dark')
+const isLocaleSwitching = ref(false)
 const activeSection = ref('top')
 let sectionObserver
 
@@ -129,7 +131,7 @@ watch(
                 ? [
                     {
                         rel: 'stylesheet',
-                        href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap',
+                        href: 'https://db.onlinewebfonts.com/c/b58d9f69d019fcca259c3fe3424aef9e?family=Montserrat-Arabic',
                     },
                 ]
                 : [],
@@ -161,10 +163,25 @@ const toggleTheme = () => {
 }
 
 const toggleLocale = async () => {
+    if (isLocaleSwitching.value) {
+        return
+    }
+
     const currentIndex = SUPPORTED_LOCALES.indexOf(locale.value)
     const nextLocale = SUPPORTED_LOCALES[(currentIndex + 1) % SUPPORTED_LOCALES.length]
-    localeCookie.value = nextLocale
-    await refresh()
+    const previousLocale = locale.value
+    isLocaleSwitching.value = true
+
+    try {
+        const nextPortfolio = await portfolioController.load(nextLocale)
+        portfolio.value = nextPortfolio
+        portfolioController.persistLocale(nextLocale, localeCookie)
+    } catch (error) {
+        localeCookie.value = previousLocale
+        console.error('Failed to switch portfolio locale.', error)
+    } finally {
+        isLocaleSwitching.value = false
+    }
 }
 
 const setupSectionObserver = () => {
@@ -202,8 +219,14 @@ onMounted(() => {
 
     const legacyLocale = localStorage.getItem(LOCALE_STORAGE_KEY)
     if (legacyLocale && legacyLocale !== portfolio.value?.locale) {
-        localeCookie.value = legacyLocale
-        refresh()
+        portfolioController.load(legacyLocale)
+            .then((content) => {
+                portfolio.value = content
+                portfolioController.persistLocale(legacyLocale, localeCookie)
+            })
+            .catch((error) => {
+                console.error('Failed to restore the saved portfolio locale.', error)
+            })
     }
 
     if (portfolio.value) {
@@ -226,7 +249,7 @@ onBeforeUnmount(() => {
 
 <style>
 .font-arabic {
-    font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+    font-family: 'Montserrat-Arabic', system-ui, sans-serif;
 }
 </style>
 
